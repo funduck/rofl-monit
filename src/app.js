@@ -1,11 +1,11 @@
 const EventsListener = require('./events_listener');
-const { getExporter } = require('./exporter');
+const { getExportStream: getExporterStream } = require('./export_stream');
 const Monitor = require('./monitor');
 
 const listener = new EventsListener(process.env.DOCKER_SOCKET)
 const monitor = new Monitor()
-const exporter = getExporter(process.env.EXPORTER);
+const exportStream = getExporterStream(process.env.EXPORTER);
 
-monitor.connect(listener.getReadStream(), exporter.getWriteStream())
+monitor.connect(listener.getReadStream(), exportStream)
 
 listener.start().catch(console.error)

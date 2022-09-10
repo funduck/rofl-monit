@@ -5,7 +5,7 @@ module.exports = class Monitor {
 
   connect(eventsStream, notificationsStream) {
     eventsStream.on('data', (event) => {
-      // console.log('DEBUG', event)
+      // console.log('DEBUG', event);
       const template = templates[`${event.Type}_${event.Action}`];
       if (template) {
         notificationsStream.write(template(event))
