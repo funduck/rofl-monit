@@ -2,21 +2,15 @@
 
 This is a monitoring tool for **docker containers**. Primary purpose is to detect **R**estart-**O**n-**F**ailure-**L**oops, a situation when containers exits with code not `0`, restarts, crashes again and so on.
 
-An inspiration for this app is [docker-telegram-notifier](https://github.com/arefaslani/docker-telegram-notifier), but it is too straightforward and just spams tons of messages when container dies and restarts.
-
-I wanted monitoring to be more clever.
-
-    Example:
-    * If container is running for a long time, and only sometimes its healthchecks fail (1 of 50) I would consider it's state `running and healthy`.
-    * If healthchecks fail more frequently (1 of 10) I would consider it's state `running with hiccups`.
-
-I would like to receive notifications when container's state changes between custom states.
-1. Concrete states are defined in [startegy](#strategies).
-2. To export notifications app uses [exporters](#exporters): console, telegram.
+Basic use is:
+1. Choose Strategy to generate notifications
+2. Choose Exporter for them
+3. Run it!
 
 ## Contents
 - [Rofl-monit](#rofl-monit)
   - [Contents](#contents)
+  - [Motivation](#motivation)
 - [Installation](#installation)
   - [Docker](#docker)
   - [From sources](#from-sources)
@@ -30,6 +24,19 @@ I would like to receive notifications when container's state changes between cus
   - [Telegram](#telegram)
 - [Tests](#tests)
 
+## Motivation
+An inspiration for this app is [docker-telegram-notifier](https://github.com/arefaslani/docker-telegram-notifier) easy to use, but too straightforward. It spams all messages when container dies and restarts.
+
+I wanted monitoring to be more clever.
+Example of use case:
+* If container is running for a long time, and only sometimes its healthchecks fail (1 of 50) I would consider it's state `running and healthy`.
+* If healthchecks fail more frequently (1 of 10) I would consider it's state `running with hiccups`.
+
+I would like to receive notifications when container's changes its **custom states**.
+
+Concrete states are defined in [startegy](#strategies).
+
+To export notifications app uses [exporters](#exporters): console, telegram.
 
 # Installation
 ## Docker
