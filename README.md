@@ -109,3 +109,10 @@ $Env:APP_TELEGRAM_CHATS='***'
 You can set up several chats for exporting.
 
 In future I plan to enable changing list of chats on the fly.
+
+## Tests
+Clone repo
+```
+yarn install
+tarn jest
+```
