@@ -1,12 +1,18 @@
+interface BaseNotification {
+    title: string
+    objectId: string
+  timeMsec: number
+}
+
 /**
  * Base notification about changes with Object.
  */
 export class Notification {
-    readonly title: string
-    readonly objectId: string
-    readonly timeMsec: number
+    readonly title: string = ''
+    readonly objectId: string = ''
+    readonly timeMsec: number = 0
 
-    public constructor(init?:Partial<Notification>) {
+    public constructor(init?:Required<BaseNotification>) {
         Object.assign(this, init);
     }
 
@@ -20,7 +26,7 @@ export class Notification {
             this.getLocaleDateTimeString(),
         ].concat(
             Object.entries(this)
-            .filter(([k,v]) => !(k in ["title", "timeMsec"]))
+            .filter(([k,v]) => k != "title" && k != "timeMsec")
             .map(([k,v]) => `${k}=${v}`)
             .sort()
         ).join('\n')

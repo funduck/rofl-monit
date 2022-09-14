@@ -1,0 +1,24 @@
+# Init project
+yarn init
+
+Create .yarnrc.yml
+nodeLinker: node-modules
+
+## Typescript config
+yarn add --dev @tsconfig/node16
+
+Create tsconfig.json
+{
+    "extends": "@tsconfig/node16/tsconfig.json",
+    "compilerOptions": {
+        "preserveConstEnums": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
+
+## Jest testing
+yarn add --dev jest typescript ts-jest @types/jest
+yarn ts-jest config:init
+
+yarn jest

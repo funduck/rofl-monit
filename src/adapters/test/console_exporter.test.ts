@@ -5,7 +5,8 @@ describe('ConsoleExporter', () => {
     test('prints to console', () => {
         new ConsoleExporter('tester').send(new Notification({
             title: 'Hey, it is a success!',
-            timeMsec: Number(new Date())
+            timeMsec: Number(new Date()),
+            objectId: '1'
         }))
     });
 });
