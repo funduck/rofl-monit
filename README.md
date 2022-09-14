@@ -12,16 +12,16 @@ Basic use is:
   - [Contents](#contents)
   - [Motivation](#motivation)
 - [Installation](#installation)
-  - [Docker](#docker)
-  - [From sources](#from-sources)
+    - [Docker](#docker)
+    - [From sources](#from-sources)
 - [Usage](#usage)
   - [Configuration](#configuration)
 - [Strategies](#strategies)
-  - [Send all](#send-all)
-  - [Detect loops](#detect-loops)
+    - [Send all](#send-all)
+    - [Detect loops](#detect-loops)
 - [Exporters](#exporters)
-  - [Console](#console)
-  - [Telegram](#telegram)
+    - [Console](#console)
+    - [Telegram](#telegram)
 - [Tests](#tests)
 
 ## Motivation
@@ -39,10 +39,10 @@ Concrete states are defined in [startegy](#strategies).
 To export notifications app uses [exporters](#exporters): console, telegram.
 
 # Installation
-## Docker
+### Docker
 `docker run <TODO image>`
 
-## From sources
+### From sources
 Get sources `git clone --depth 1 https://github.com/funduck/rofl-monit`.
 
 Install `TODO`.
@@ -85,12 +85,12 @@ Application uses environment variables for parameters.
 Strategy uses incoming stream of docker events and may check container's state in docker directly.
 
 Strategy decides when to emit notifications.
-## Send all
+### Send all
 `APP_STRATEGY=send_all`
 
 It is straightforward strategy, just sends all docker events as notifications. Not good in production but good for debugging.
 
-## Detect loops
+### Detect loops
 `APP_STRATEGY=detect_loops`
 
 It detects when something of following happens with container:
@@ -109,11 +109,11 @@ It detects when something of following happens with container:
 * rofl ended - when container exits restart-on-failure-loop and is running fine again
 
 # Exporters
-## Console
+### Console
 `APP_EXPORTER=console`
 
 Just plain messages in console.
-## Telegram
+### Telegram
 `APP_EXPORTER=telegram`
 
 To use it you need:
