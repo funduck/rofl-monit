@@ -1,38 +1,54 @@
 # Rofl-monit
 
-## Description
-This is a monitoring tool for docker containers. Primary purpose is to detect Restart-On-Failure-Loops, a situation when containers exits with code not `0`, restarts, crashes again and so on.
+This is a monitoring tool for **docker containers**. Primary purpose is to detect **R**estart-**O**n-**F**ailure-**L**oops, a situation when containers exits with code not `0`, restarts, crashes again and so on.
 
-Inspiration for this app was [docker-telegram-notifier](https://github.com/arefaslani/docker-telegram-notifier), but it is too straightforward and just spams tons of messages when container dies and restarts.
+An inspiration for this app is [docker-telegram-notifier](https://github.com/arefaslani/docker-telegram-notifier), but it is too straightforward and just spams tons of messages when container dies and restarts.
 
-I wanted monitoring to be more clever. For example:
-* If container is running for a long time, and only sometimes its healthchecks fail (1 of 50) I would consider it's state `running and healthy`.
-* If healthchecks fail more frequently (1 of 10) I would consider it's state `running with hiccups`.
-And I would like to receive notifications when container's state changes between these.
+I wanted monitoring to be more clever.
 
-Concrete states and their change are defined in [startegy](#strategies). And strategies produce notifications.
+    Example:
+    * If container is running for a long time, and only sometimes its healthchecks fail (1 of 50) I would consider it's state `running and healthy`.
+    * If healthchecks fail more frequently (1 of 10) I would consider it's state `running with hiccups`.
 
-For notifications app uses *exporters*: console, telegram.
+I would like to receive notifications when container's state changes between custom states.
+1. Concrete states are defined in [startegy](#strategies).
+2. To export notifications app uses [exporters](#exporters): console, telegram.
 
-## Installation
-### Docker
+## Contents
+- [Rofl-monit](#rofl-monit)
+  - [Contents](#contents)
+- [Installation](#installation)
+  - [Docker](#docker)
+  - [From sources](#from-sources)
+- [Usage](#usage)
+  - [Configuration](#configuration)
+- [Strategies](#strategies)
+  - [Send all](#send-all)
+  - [Detect loops](#detect-loops)
+- [Exporters](#exporters)
+  - [Console](#console)
+  - [Telegram](#telegram)
+- [Tests](#tests)
+
+
+# Installation
+## Docker
 `docker run <TODO image>`
 
-### From sources
+## From sources
 Get sources `git clone --depth 1 https://github.com/funduck/rofl-monit`.
 
 Install `TODO`.
 
 Run `TODO`
 
-## Usage
-Choose notifications strategy.
+# Usage
+* Choose notifications strategy.
+* Set filter for containers.
+* Set filter for notifications.
+* Set exporter for notifications.
 
-Set filter for notifications.
-
-Set exporters for notifications.
-
-Example (docker):
+Example for docker:
 ```
 docker run \
   -e APP_STRATEGY=send_all \
@@ -45,26 +61,31 @@ docker run \
 ```
 ## Configuration
 Application uses environment variables for parameters.
-**APP_STRATEGY** - string with strategy name, available: send_all, detect_loops
 
-**APP_INCLUDE_CONTAINERS** is list of strings/masks. Containers to be monitored.
+`APP_STRATEGY` - string with strategy name, available: send_all, detect_loops.
 
-**APP_INCLUDE_NOTIFICATIONS** is a list of strings/masks. Notifications to be exported.
+`APP_INCLUDE_CONTAINERS` is list of strings/masks. Containers to be monitored.
 
-**APP_EXPORTER** is string, available values: console, telegram
+`APP_INCLUDE_NOTIFICATIONS` is a list of strings/masks. Notifications to be exported.
 
-**APP_TELEGRAM_BOT_TOKEN** is string, token of your telegram bot
+`APP_EXPORTER` is string, available values: console, telegram.
 
-**APP_TELEGRAM_CHATS** is a list of strings, ids of chats in telegram
+`APP_TELEGRAM_BOT_TOKEN` is string, token of your telegram bot.
 
-## Strategies
+`APP_TELEGRAM_CHATS` is a list of strings, ids of chats in telegram.
+
+# Strategies
 Strategy uses incoming stream of docker events and may check container's state in docker directly.
 
 Strategy decides when to emit notifications.
-### send_all
+## Send all
+`APP_STRATEGY=send_all`
+
 It is straightforward strategy, just sends all docker events as notifications. Not good in production but good for debugging.
 
-### detect_loops
+## Detect loops
+`APP_STRATEGY=detect_loops`
+
 It detects when something of following happens with container:
 * created - when user creates new container
 * destroyed - when user destroys container
@@ -80,12 +101,12 @@ It detects when something of following happens with container:
 * rofl started - when container starts restart-on-failure-loop
 * rofl ended - when container exits restart-on-failure-loop and is running fine again
 
-## Exporters
-### Console
+# Exporters
+## Console
 `APP_EXPORTER=console`
 
 Just plain messages in console.
-### Telegram
+## Telegram
 `APP_EXPORTER=telegram`
 
 To use it you need:
@@ -110,7 +131,7 @@ You can set up several chats for exporting.
 
 In future I plan to enable changing list of chats on the fly.
 
-## Tests
+# Tests
 Clone repo
 ```
 yarn install
