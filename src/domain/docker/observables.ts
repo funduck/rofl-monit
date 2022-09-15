@@ -1,4 +1,4 @@
-import { Object } from "../core/objects"
+import { Object } from "../core/entities/observable"
 
 export class ContainerObject extends Object {
     image: string

@@ -1,6 +1,6 @@
 import assert from "assert"
 import { randomUUID } from "crypto"
-import { Notification } from "./notifications"
+import { Notification } from "./values/notifications"
 
 export abstract class Exporter {
     readonly id: string = randomUUID()

@@ -1,7 +1,9 @@
+import { DomainValue } from "../value"
+
 /**
  * Base received event about Object.
  */
-export abstract class Event {
+export abstract class MonitoringEvent extends DomainValue {
     readonly action: string
     readonly objectId: string
     readonly timeMsec: number

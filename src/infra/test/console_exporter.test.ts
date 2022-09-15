@@ -1,4 +1,4 @@
-import { Notification } from "../../domain/core/notifications";
+import { Notification } from "../../domain/core/values/notifications";
 import { ConsoleExporter } from "../console_exporter";
 
 describe('ConsoleExporter', () => {

@@ -1,9 +1,9 @@
 /**
  * Docker events as children of domain.Event
  */
-import { Event } from "../core/events";
+import { MonitoringEvent } from "../core/values/monitoring_events";
 
-export class ContainerEvent extends Event {
+export class ContainerEvent extends MonitoringEvent {
     /**
      * Base docker container event
      */

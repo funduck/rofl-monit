@@ -1,6 +1,6 @@
-import { Event } from "./events"
-import { Exporter, Exporters } from "./exporter"
-import { Notification } from "./notifications"
+import { MonitoringEvent } from "./values/monitoring_events"
+import { Exporter, Exporters } from "./exporters"
+import { Notification } from "./values/notifications"
 
 /**
  * Produces Notifications about Objects under monitoring`
@@ -21,7 +21,7 @@ export abstract class Strategy {
     /**
      * Accept and store event about Object
      */
-    abstract accept(event: Event): Promise<void>
+    abstract accept(event: MonitoringEvent): Promise<void>
 
     /**
      * Use this method to send notifications from strategy implemetation
@@ -30,7 +30,7 @@ export abstract class Strategy {
         if (this.isEnabled()) {
             return this.exporter.send(notification)
         }
-        return new Promise(resolve => resolve())
+        return Promise.resolve()
     }
 
     /**

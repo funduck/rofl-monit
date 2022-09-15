@@ -1,13 +1,16 @@
 # domain
 
-## Object
+## Observable
 Any object under monitoring.
 
 ## Event
-Is a message from external world about some Object. It is consumed by Strategies.
+Is a message from external world about some Object. It is consumed by Observer.
 
-## Strategy
-It accepts Events and can produce Notifications to Exporter at any moment.
+## Observer
+It accepts Events and can produce Notifications.
+
+## ObserverStrategy
+A strategy for Observer.
 
 ## Notification
 Is a message to external world.
