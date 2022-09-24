@@ -141,5 +141,5 @@ In future I plan to enable changing list of chats on the fly.
 # Tests
 ```
 yarn install
-yarn jest
+yarn jest -b --verbose --watch
 ```

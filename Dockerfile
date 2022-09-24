@@ -1,0 +1,8 @@
+FROM node:slim
+
+ENV DOCKER_SOCKET=/var/run/docker.sock
+ENV EXPORTER=telegram
+ENV TELEGRAM_BOT_TOKEN=
+ENV TELEGRAM_CHAT_ID=
+
+WORKDIR /app

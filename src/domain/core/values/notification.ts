@@ -1,20 +1,12 @@
-interface BaseNotification {
-    title: string
-    objectId: string
-  timeMsec: number
-}
-
 /**
  * Base notification about changes with Object.
  */
 export class Notification {
-    readonly title: string = ''
-    readonly objectId: string = ''
-    readonly timeMsec: number = 0
-
-    public constructor(init?:Required<BaseNotification>) {
-        Object.assign(this, init);
-    }
+    public constructor(
+        readonly title: string = '',
+        readonly objectId: string = '',
+        readonly timeMsec: number = 0
+    ) {}
 
     public getLocaleDateTimeString(): string {
         return new Date(this.timeMsec).toLocaleString()

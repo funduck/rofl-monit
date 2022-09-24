@@ -1,7 +1,11 @@
-import { DomainEvent } from "./event";
+import { DomainEvent, DomainEventPublisher, DomainEventSubscriber } from "./event";
 
-export class DomainService {
-    protected emit(event: DomainEvent): void {
-        // TODO
+export abstract class DomainService implements DomainEventSubscriber {
+    constructor(protected eventPublisher: DomainEventPublisher) {}
+
+    abstract handleEvent(event: DomainEvent): void;
+
+    protected emitEvent(event: DomainEvent): void {
+        this.eventPublisher.publish(event)
     }
 }

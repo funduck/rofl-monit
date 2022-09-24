@@ -1,3 +1,4 @@
+import { Observable } from "../entities/observable";
 import { DomainRepository } from "../repository";
 
-export class ObservablesRepository extends DomainRepository {}
+export type ObservablesRepository = DomainRepository<Observable>

@@ -1,5 +1,5 @@
 import { DomainService } from "../service";
-import { MonitoringEvent } from "../values/monitoring_events";
+import { MonitoringEvent } from "../values/monitoring_event";
 
 /**
  * Receives MonitoringEvents for its personal Observable
@@ -7,11 +7,9 @@ import { MonitoringEvent } from "../values/monitoring_events";
  * Can access Observable by observableId
  */
 export abstract class ObserverService extends DomainService {
-    observableId: string
-
-    constructor(observableId: string) {
-        super()
-        this.observableId = observableId
+    constructor(public readonly observableId: string, ...args: ConstructorParameters<typeof DomainService>) {
+        super(...args)
+        this.eventPublisher.subscribe(this, MonitoringEvent)
     }
 
     protected abstract _save(event: MonitoringEvent): Promise<void>

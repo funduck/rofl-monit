@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto"
 
 export class DomainEntity {
-    readonly id: string = randomUUID()
+    constructor(readonly id: string = randomUUID()) {}
 }

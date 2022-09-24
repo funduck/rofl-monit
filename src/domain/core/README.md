@@ -3,8 +3,14 @@
 ## Observable
 Any object under monitoring.
 
-## Event
+## MonitoringEvent
 Is a message from external world about some Object. It is consumed by Observer.
+
+## Representation
+Representation of observed Observable
+
+## RepresentationState
+Representation can change states, when it does, it emits events
 
 ## Observer
 It accepts Events and can produce Notifications.

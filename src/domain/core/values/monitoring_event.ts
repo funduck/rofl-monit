@@ -1,12 +1,12 @@
-import { DomainValue } from "../value"
+import { DomainEvent } from "../event"
 
 /**
  * Base received event about Object.
  */
-export abstract class MonitoringEvent extends DomainValue {
-    readonly action: string
-    readonly objectId: string
-    readonly timeMsec: number
+export abstract class MonitoringEvent extends DomainEvent {
+    constructor(readonly action: string, readonly objectId: string) {
+        super()
+    }
 
     toString(): string {
         return Object.entries(this)
