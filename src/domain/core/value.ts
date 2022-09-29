@@ -1,1 +1,3 @@
-export class DomainValue {}
+export class DomainValue {
+    constructor(readonly value: number | string) {}
+}
