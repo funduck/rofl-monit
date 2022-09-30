@@ -1,5 +1,10 @@
 import { Observable } from "../../core/entities/observable";
 
 export class Container extends Observable {
-    image: string
+    constructor(
+        readonly image: string,
+        ...args: ConstructorParameters<typeof Observable>
+    ) {
+        super(...args)
+    }
 }

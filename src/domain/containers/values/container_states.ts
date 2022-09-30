@@ -1,7 +1,10 @@
 import { RepresentationState } from "../../core/values/representation_state";
 
+/**
+ * States of representation of containers
+ */
 export class ContainerState extends RepresentationState {}
 
-export class ContainerRunningState extends ContainerState {}
-export class ContainerDiedState extends ContainerState {}
-export class ContainerStoppedState extends ContainerState {}
+export const ContainerRunningState = new ContainerState('running')
+export const ContainerDiedState = new ContainerState('died')
+export const ContainerStoppedState = new ContainerState('stopped')
