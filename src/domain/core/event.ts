@@ -1,8 +1,19 @@
+import { Class } from "./lib"
+
 /**
  * Base class for all domain events
  */
 export class DomainEvent {
-    constructor(readonly timeMsec: number = Number(new Date())) {}
+    constructor(
+        readonly timeMsec: number = Number(new Date())
+    ) {}
+
+    toString(): string {
+        return Object.entries(this)
+            .map(([k,v]) => `${k}:${v}`)
+            .sort()
+            .join(', ')
+    }
 }
 
 export class DomainEventError extends Error {}
@@ -70,7 +81,7 @@ export class DomainEventPublisher {
      *
      * For example, if subscribed for DomainEvent subscriber will receive all events because all events subclass DomainEvent
      */
-    subscribe(subscriber: DomainEventSubscriber, eventClass: typeof DomainEvent = DomainEvent): void {
+    subscribe(subscriber: DomainEventSubscriber, eventClass: Class<DomainEvent> = DomainEvent): void {
         for (const EventClass of this.getSubscribedClasses(subscriber)) {
             if (EventClass.prototype instanceof eventClass ||
                 eventClass.prototype instanceof EventClass ||
