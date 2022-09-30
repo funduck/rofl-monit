@@ -1,6 +1,8 @@
-import { DomainEntity } from "../entity";
+import { DomainEntity, DomainEntityId } from "../entity";
 
 /**
  * Base object of monitoring.
  */
-export abstract class Observable extends DomainEntity {}
+export abstract class Observable extends DomainEntity {
+    declare id: DomainEntityId<Observable>
+}

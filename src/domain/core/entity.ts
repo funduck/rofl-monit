@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import { DomainValue } from "./value";
 
 /**
@@ -23,5 +24,9 @@ export class DomainEntityId<T extends DomainEntity> extends DomainValue {
  * Base class for all domain entities.
  */
 export class DomainEntity {
-    constructor(readonly id: DomainEntityId<DomainEntity>) {}
+    readonly id: DomainEntityId<DomainEntity>
+
+    constructor(id: DomainEntityId<DomainEntity> | null = null) {
+        this.id = id != null ? id : new DomainEntityId<DomainEntity>(randomUUID())
+    }
 }

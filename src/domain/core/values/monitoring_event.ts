@@ -1,17 +1,16 @@
+import { Observable } from "../entities/observable"
+import { DomainEntityId } from "../entity"
 import { DomainEvent } from "../event"
 
 /**
- * Base received event about Object.
+ * Base event from monitoring about any Observable.
  */
-export abstract class MonitoringEvent extends DomainEvent {
-    constructor(readonly action: string, readonly objectId: string) {
-        super()
-    }
-
-    toString(): string {
-        return Object.entries(this)
-            .map(([k,v]) => `${k}:${v}`)
-            .sort()
-            .join(', ')
+export class MonitoringEvent extends DomainEvent {
+    constructor(
+        readonly action: string,
+        readonly observableId: DomainEntityId<Observable>,
+        readonly timeMsec: number
+    ) {
+        super(timeMsec)
     }
 }
