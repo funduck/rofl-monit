@@ -2,8 +2,10 @@
     "extends": "@tsconfig/node16/tsconfig.json",
     "compilerOptions": {
         "preserveConstEnums": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "outDir": "build",
+        "declaration": true
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts"]
+    "exclude": ["node_modules", "build", "**/*.spec.ts"]
 }
