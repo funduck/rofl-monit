@@ -4,7 +4,7 @@ import { ObservableStateUnknown } from "../values/observable_state"
 import { Container } from "../aggregates/container"
 import { ContainerEvent, ContainerEventStateChanged } from "../events/container_events"
 import { ContainerStateDied, ContainerStateRunning, ContainerStateStopped } from "../values/container_states"
-import { InMemoryContainerRepo } from "../../infra/in_memory_container_repo"
+import { InMemoryContainerRepository } from "../../infra/in_memory_container_repository"
 import { EntityNotFound } from "../core/repository"
 import { MonitoringEventContainer, MonitoringEventContainerOOM, MonitoringEventContainerStarted, MonitoringEventContainerStopped } from "../events/container_monitoring_events"
 import { ContainerObserver } from "./container_observer"
@@ -25,7 +25,7 @@ describe('ContainerObserverService', () => {
     }
 
     const eventPublisher = DomainEventPublisher.getInstance('new')
-    let containerRepo: InMemoryContainerRepo
+    let containerRepo: InMemoryContainerRepository
     let observer: ContainerObserver
 
     let queue: Array<ContainerEventStateChanged> = []
@@ -46,7 +46,7 @@ describe('ContainerObserverService', () => {
         beforeAll(() => {
             queue = []
             eventPublisher.reset()
-            containerRepo = new InMemoryContainerRepo(null)
+            containerRepo = new InMemoryContainerRepository(null)
             observer = new ContainerObserver(containerRepo, eventPublisher)
             eventPublisher.subscribe(observer, MonitoringEventContainer)
             eventPublisher.subscribe(subscriber, ContainerEventStateChanged)

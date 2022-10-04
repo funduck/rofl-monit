@@ -3,13 +3,22 @@
  */
 
 import { DomainEventPublisher } from "../domain/core/event";
+import { MonitoringEvent } from "../domain/events/monitoring_event";
+import { DockerMonitoring } from "../interface/docker_monitoring";
 
 export function MonitoringService() {
     const publisher = DomainEventPublisher.getInstance()
 
-    /**
-     * TODO
-     * listen to docker and make ContainerEvents, NetworkEvents, ...
-     * publish them into domain publisher
-     */
+    const monitoring = new DockerMonitoring()
+    monitoring.start().then(() => {
+        const monitEventsStream = monitoring.getMonitoringEventsStream()
+        monitEventsStream.on('data', (monitEvent) => {
+            publisher.publish(monitEvent as MonitoringEvent)
+        })
+        monitEventsStream.on('error', (err) => {
+            console.error(err)
+        })
+    }, (err) => {
+        console.error(err)
+    })
 }
