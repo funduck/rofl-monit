@@ -9,6 +9,10 @@ export abstract class DomainService implements DomainEventSubscriber {
 
     constructor(protected eventPublisher: DomainEventPublisher) {}
 
+    toString(): string {
+        return `${this.constructor.name}`
+    }
+
     abstract handleEvent(event: DomainEvent): void;
 
     protected emitEvent(event: DomainEvent): void {

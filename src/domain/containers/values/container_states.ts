@@ -1,10 +1,10 @@
-import { RepresentationState } from "../../core/values/representation_state";
+import { ObservableState } from "../../core/values/observable_state";
 
 /**
  * States of representation of containers
  */
-export class ContainerState extends RepresentationState {}
+export class ContainerState extends ObservableState {}
 
-export const ContainerRunningState = new ContainerState('running')
-export const ContainerDiedState = new ContainerState('died')
-export const ContainerStoppedState = new ContainerState('stopped')
+export const ContainerStateRunning = new ContainerState('running')
+export const ContainerStateDied = new ContainerState('died')
+export const ContainerStateStopped = new ContainerState('stopped')

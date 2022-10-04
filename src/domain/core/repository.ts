@@ -3,10 +3,11 @@ import { DomainEntity, DomainEntityId } from "./entity"
 /**
  * Interface for all repositories of domain entities.
  */
-export interface DomainRepository<T extends DomainEntity> {
-    get(entityId: DomainEntityId<T>): Promise<T>
-    save(entity: T): Promise<void>
-    delete(entityId: DomainEntityId<T>): Promise<void>
+export interface InMemoryDomainRepository<T extends DomainEntity> {
+    has(entityId: DomainEntityId<T>): boolean
+    get(entityId: DomainEntityId<T>): T
+    save(entity: T): void
+    delete(entityId: DomainEntityId<T>): void
 }
 
 /**

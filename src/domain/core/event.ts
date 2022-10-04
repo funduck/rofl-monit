@@ -1,4 +1,4 @@
-import { Class } from "./lib"
+import { Class } from "../../infra/lib"
 
 /**
  * Base class for all domain events
@@ -70,7 +70,11 @@ export class DomainEventPublisher {
         for (const [EventClass, subscribers] of this.subscriptions.entries()) {
             if (event instanceof EventClass) {
                 for (const subscriber of subscribers) {
-                    subscriber.handleEvent(event)
+                    try {
+                        subscriber.handleEvent(event)
+                    } catch (e) {
+                        console.error(`Subscriber ${subscriber} failed on handleEvent`, e)
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { Observable } from "../entities/observable"
+import { Observable } from "../aggregates/observable"
 import { DomainEntityId } from "../entity"
 import { DomainEvent } from "../event"
 

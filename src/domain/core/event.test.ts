@@ -1,4 +1,4 @@
-import { DomainEvent, DomainEventError, DomainEventPublisher, DomainEventSubscriber } from "../event";
+import { DomainEvent, DomainEventError, DomainEventPublisher } from "./event";
 
 describe('DomainEvents', () => {
     describe('One publisher', () => {

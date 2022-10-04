@@ -1,5 +1,6 @@
+import { strict } from "node:assert"
 import { DomainEntity, DomainEntityId } from "../domain/core/entity";
-import { DomainRepository, EntityNotFound } from "../domain/core/repository";
+import { InMemoryDomainRepository, EntityNotFound } from "../domain/core/repository";
 
 /**
  * In memory storage for any kind of entities.
@@ -8,7 +9,7 @@ import { DomainRepository, EntityNotFound } from "../domain/core/repository";
  * Repository needs cloning because otherwise if two places call "get" of same entity,
  * they will receive same object and it will lead to side effects.
  */
-export abstract class InMemoryRepository<T extends DomainEntity> implements DomainRepository<T> {
+export abstract class InMemoryRepository<T extends DomainEntity> implements InMemoryDomainRepository<T> {
     private mem: Map<string, T>
 
     constructor(mem: Map<string, T> | null) {
@@ -17,23 +18,23 @@ export abstract class InMemoryRepository<T extends DomainEntity> implements Doma
 
     abstract clone(entity: T): T
 
-    get(entityId: DomainEntityId<T>): Promise<T> {
-        return new Promise((resolve, reject) => {
-            const res = this.mem.get(String(entityId))
-            if (!res) {
-                return reject(new EntityNotFound(entityId))
-            }
-            resolve(this.clone(res))
-        })
+    has(entityId: DomainEntityId<T>): boolean {
+        return this.mem.has(String(entityId))
     }
 
-    save(entity: T): Promise<void> {
+    get(entityId: DomainEntityId<T>): T {
+        const res = this.mem.get(String(entityId))
+        if (res === undefined) {
+            throw new EntityNotFound(entityId)
+        }
+        return this.clone(res)
+    }
+
+    save(entity: T): void {
         this.mem.set(String(entity.id), entity)
-        return Promise.resolve()
     }
 
-    delete(entityId: DomainEntityId<T>): Promise<void> {
+    delete(entityId: DomainEntityId<T>): void {
         this.mem.delete(String(entityId))
-        return Promise.resolve()
     }
 }

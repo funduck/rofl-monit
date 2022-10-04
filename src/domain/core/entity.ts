@@ -29,4 +29,15 @@ export class DomainEntity {
     constructor(id: DomainEntityId<DomainEntity> | null = null) {
         this.id = id != null ? id : new DomainEntityId<DomainEntity>(randomUUID())
     }
+
+    toString(): string {
+        return `${this.constructor.name}:${this.id}`
+    }
+}
+
+/**
+ * Short-named helper function to get DomainEntityId of particular DomainEntity by value
+ */
+export function Id<T extends DomainEntity>(value: string | number): DomainEntityId<T> {
+    return new DomainEntityId<T>(value)
 }

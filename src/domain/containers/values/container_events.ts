@@ -1,19 +1,17 @@
-import { MonitoringEvent } from "../../core/values/monitoring_event";
+import { DomainEvent } from "../../core/event";
+import { ContainerState } from "./container_states";
 
-export class ContainerEvent extends MonitoringEvent {
-    constructor(readonly image: string) {
-        super()
+/**
+ * Event when state of representation of container has changed
+ */
+export class ContainerEvent extends DomainEvent {}
+
+export class ContainerEventStateChanged extends ContainerEvent {
+    constructor(
+        readonly previous: ContainerState,
+        readonly current: ContainerState,
+        ...args: ConstructorParameters<typeof DomainEvent>
+    ) {
+        super(...args)
     }
 }
-export class ContainerStartedEvent extends ContainerEvent {}
-export class ContainerOOMEvent extends ContainerEvent {}
-export class ContainerKilledEvent extends ContainerEvent {
-    signal: number
-}
-export class ContainerDiedEvent extends ContainerEvent {
-    exitCode: number
-}
-export class ContainerStoppedEvent extends ContainerEvent {}
-export class ContainerRestartedEvent extends ContainerEvent {}
-export class ContainerIsHealthyEvent extends ContainerEvent {}
-export class ContainerNotHealthyEvent extends ContainerEvent {}

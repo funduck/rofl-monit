@@ -3,9 +3,8 @@
  */
 export class Notification {
     public constructor(
-        readonly title: string = '',
-        readonly objectId: string = '',
-        readonly timeMsec: number = 0
+        readonly title: string,
+        readonly timeMsec: number
     ) {}
 
     public getLocaleDateTimeString(): string {
