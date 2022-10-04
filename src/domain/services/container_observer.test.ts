@@ -1,14 +1,14 @@
-import { DomainEvent, DomainEventPublisher } from "../../core/event"
-import { Class, sleep } from "../../../infra/lib"
-import { ObservableStateUnknown } from "../../core/values/observable_state"
+import { DomainEvent, DomainEventPublisher } from "../core/event"
+import { Class, sleep } from "../../infra/core/lib"
+import { ObservableStateUnknown } from "../values/observable_state"
 import { Container } from "../aggregates/container"
-import { ContainerEvent, ContainerEventStateChanged } from "../values/container_events"
+import { ContainerEvent, ContainerEventStateChanged } from "../events/container_events"
 import { ContainerStateDied, ContainerStateRunning, ContainerStateStopped } from "../values/container_states"
-import { InMemoryContainerRepo } from "../../../infra/containers/in_memory_container_repo"
-import { EntityNotFound } from "../../core/repository"
-import { MonitoringEventContainer, MonitoringEventContainerOOM, MonitoringEventContainerStarted, MonitoringEventContainerStopped } from "../values/monitoring_events"
+import { InMemoryContainerRepo } from "../../infra/in_memory_container_repo"
+import { EntityNotFound } from "../core/repository"
+import { MonitoringEventContainer, MonitoringEventContainerOOM, MonitoringEventContainerStarted, MonitoringEventContainerStopped } from "../events/container_monitoring_events"
 import { ContainerObserver } from "./container_observer"
-import { Id } from "../../core/entity"
+import { Id } from "../core/entity"
 
 describe('ContainerObserverService', () => {
     const containerImage = 'sample.image'

@@ -1,12 +1,12 @@
-import { DomainEvent, DomainEventPublisher } from "../../core/event";
-import { DomainService } from "../../core/service";
-import { InMemoryDomainRepository } from "../../core/repository";
+import { DomainEvent, DomainEventPublisher } from "../core/event";
+import { DomainService } from "../core/service";
+import { InMemoryDomainRepository } from "../core/repository";
 import { Container } from "../aggregates/container";
-import { MonitoringEventContainerDied, MonitoringEventContainer, MonitoringEventContainerOOM, MonitoringEventContainerRestarted, MonitoringEventContainerStarted, MonitoringEventContainerStopped } from "../values/monitoring_events";
-import { DomainEntityId } from "../../core/entity";
+import { MonitoringEventContainerDied, MonitoringEventContainer, MonitoringEventContainerOOM, MonitoringEventContainerRestarted, MonitoringEventContainerStarted, MonitoringEventContainerStopped } from "../events/container_monitoring_events";
+import { DomainEntityId } from "../core/entity";
 import { ContainerStateDied, ContainerState, ContainerStateRunning, ContainerStateStopped } from "../values/container_states";
-import { ObservableStateUnknown } from "../../core/values/observable_state";
-import { ContainerEventStateChanged } from "../values/container_events";
+import { ObservableStateUnknown } from "../values/observable_state";
+import { ContainerEventStateChanged } from "../events/container_events";
 
 /**
  * Receives MonitoringEvents, updates representations of containers and emits MonitoringEventContainerStates

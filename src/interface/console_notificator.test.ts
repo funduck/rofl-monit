@@ -1,5 +1,5 @@
-import { Notification } from "../../domain/core/values/notification";
-import { ConsoleNotificator } from "../console_notificator";
+import { Notification } from "../domain/values/notification";
+import { ConsoleNotificator } from "./console_notificator";
 
 describe('ConsoleExporter', () => {
     test('prints to console', () => {

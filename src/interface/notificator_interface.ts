@@ -1,4 +1,4 @@
-import { Notification } from "../domain/core/values/notification";
+import { Notification } from "../domain/values/notification";
 
 export abstract class NotificatorInterface {
     /**

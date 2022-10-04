@@ -1,4 +1,4 @@
-import { Class } from "../../infra/lib"
+import { Class } from "../../infra/core/lib"
 
 /**
  * Base class for all domain events

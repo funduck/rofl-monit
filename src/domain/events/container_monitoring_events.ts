@@ -1,5 +1,5 @@
-import { DomainEntityId } from "../../core/entity";
-import { MonitoringEvent } from "../../core/values/monitoring_event";
+import { DomainEntityId } from "../core/entity";
+import { MonitoringEvent } from "./monitoring_event";
 import { Container } from "../aggregates/container";
 
 /**

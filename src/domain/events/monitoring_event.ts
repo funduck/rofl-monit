@@ -1,6 +1,6 @@
 import { Observable } from "../aggregates/observable"
-import { DomainEntityId } from "../entity"
-import { DomainEvent } from "../event"
+import { DomainEntityId } from "../core/entity"
+import { DomainEvent } from "../core/event"
 
 /**
  * Base event from monitoring about any Observable.

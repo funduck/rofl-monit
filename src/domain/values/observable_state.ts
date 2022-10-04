@@ -1,4 +1,4 @@
-import { DomainValue } from "../value";
+import { DomainValue } from "../core/value";
 
 export class ObservableState extends DomainValue {
     constructor(descr: string = '') {

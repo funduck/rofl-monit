@@ -1,6 +1,5 @@
-import { strict } from "node:assert"
-import { DomainEntity, DomainEntityId } from "../domain/core/entity";
-import { InMemoryDomainRepository, EntityNotFound } from "../domain/core/repository";
+import { DomainEntity, DomainEntityId } from "../../domain/core/entity";
+import { InMemoryDomainRepository, EntityNotFound } from "../../domain/core/repository";
 
 /**
  * In memory storage for any kind of entities.

@@ -1,7 +1,7 @@
-import { ContainerObserver } from "../domain/containers/services/container_observer";
-import { MonitoringEventContainer } from "../domain/containers/values/monitoring_events";
+import { ContainerObserver } from "../domain/services/container_observer";
+import { MonitoringEventContainer } from "../domain/events/container_monitoring_events";
 import { DomainEventPublisher } from "../domain/core/event";
-import { InMemoryContainerRepo } from "../infra/containers/in_memory_container_repo";
+import { InMemoryContainerRepo } from "../infra/in_memory_container_repo";
 
 /**
  * Listens for MonitoringEvents in system and publishes them to domain observer services

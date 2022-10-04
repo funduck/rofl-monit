@@ -1,4 +1,4 @@
-import { Notification } from "../domain/core/values/notification";
+import { Notification } from "../domain/values/notification";
 import { NotificatorInterface } from "./notificator_interface";
 
 export class ConsoleNotificator extends NotificatorInterface {

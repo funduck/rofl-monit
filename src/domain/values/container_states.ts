@@ -1,4 +1,4 @@
-import { ObservableState } from "../../core/values/observable_state";
+import { ObservableState } from "./observable_state";
 
 /**
  * States of representation of containers

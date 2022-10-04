@@ -1,5 +1,5 @@
-import { DomainEntity, DomainEntityId } from "../domain/core/entity"
-import { EntityNotFound } from "../domain/core/repository"
+import { DomainEntity, DomainEntityId } from "../../domain/core/entity"
+import { EntityNotFound } from "../../domain/core/repository"
 import { InMemoryRepository } from "./in_memory_repository"
 
 describe('InMemoryRepository', () => {

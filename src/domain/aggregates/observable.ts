@@ -1,4 +1,4 @@
-import { DomainEntity, DomainEntityId } from "../entity";
+import { DomainEntity, DomainEntityId } from "../core/entity";
 import { ObservableState, ObservableStateUnknown } from "../values/observable_state";
 
 /**
