@@ -5,23 +5,24 @@ import JSONStream from "jsonstream";
 import { monitoringEventFromDockerEvent } from "./docker_adapter";
 
 export class DockerMonitoring implements MonitoringInterface {
-    private docker: Docker
-    private rawEventsStream?: Readable
-    private monitoringEventsStream: Transform
+    private docker: Docker;
+    private rawEventsStream?: Readable;
+    private monitoringEventsStream: Transform;
 
     constructor() {
         this.docker = new Docker();
         this.monitoringEventsStream = new Transform({
-            transform(chunk, encoding, callback) {
+            transform(obj, encoding, callback) {
                 try {
-                    callback(null, monitoringEventFromDockerEvent(chunk.toString()));
+                    const event = monitoringEventFromDockerEvent(obj);
+                    if (event) callback(null, event);
                 } catch (err) {
-                    callback(err as Error)
+                    callback(err as Error);
                 }
             },
-            writableObjectMode: false,
-            readableObjectMode: true
-        })
+            writableObjectMode: true,
+            readableObjectMode: true,
+        });
     }
 
     /**
@@ -29,11 +30,13 @@ export class DockerMonitoring implements MonitoringInterface {
      */
     async start(): Promise<void> {
         // @ts-ignore
-        this.rawEventsStream = await this.docker.getEvents()
-        this.rawEventsStream!.pipe(JSONStream.parse('*')).pipe(this.monitoringEventsStream)
+        this.rawEventsStream = await this.docker.getEvents();
+        this.rawEventsStream!.pipe(JSONStream.parse("*")).pipe(
+            this.monitoringEventsStream
+        );
     }
 
     getMonitoringEventsStream(): Readable {
-        return this.monitoringEventsStream
+        return this.monitoringEventsStream;
     }
 }

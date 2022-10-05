@@ -7,8 +7,8 @@ import { InMemoryContainerRepository } from "../infra/in_memory_container_reposi
  * Listens for MonitoringEvents in system and publishes them to domain observer services
  */
 export function ObserverService() {
-    const publisher = DomainEventPublisher.getInstance()
-    const containerRepo = new InMemoryContainerRepository(null)
-    const containerObserver = new ContainerObserver(containerRepo, publisher)
-    publisher.subscribe(containerObserver, MonitoringEventContainer)
+    const publisher = DomainEventPublisher.getInstance();
+    const containerRepo = new InMemoryContainerRepository(null);
+    const containerObserver = new ContainerObserver(containerRepo, publisher);
+    publisher.subscribe(containerObserver, MonitoringEventContainer);
 }
