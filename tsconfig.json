@@ -3,9 +3,9 @@
     "compilerOptions": {
         "preserveConstEnums": true,
         "esModuleInterop": true,
+        "rootDir": "src",
         "outDir": "build",
-        "declaration": true
-    },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "build", "**/*.spec.ts"]
+        "declaration": true,
+        "sourceMap": true
+    }
 }

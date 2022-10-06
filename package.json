@@ -11,6 +11,7 @@
         "typescript": "^4.8.3"
     },
     "scripts": {
+        "run": "tsc && node build/main.js",
         "compile": "tsc",
         "test": "jest"
     },
