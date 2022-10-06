@@ -6,6 +6,8 @@ import { DomainRepository } from "../domain/core/repository";
 
 /**
  * Splits stream of monitoring events to different observers.
+ * Consumes MonitoringEvent.
+ * Produces ContainerEventStateChanged.
  */
 export function ObserverService() {
     const publisher = DomainEventPublisher.getInstance();

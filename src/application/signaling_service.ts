@@ -6,6 +6,8 @@ import { InMemoryContainerRepository } from "../infra/in_memory_container_reposi
 
 /**
  * Connects signaling strategies and domain events.
+ * Consumes ContainerEventStateChanged.
+ * Produces NotificationEvents.
  */
 export function SignalingService() {
     const publisher = DomainEventPublisher.getInstance();
