@@ -1,18 +1,16 @@
-import { Class } from "../../infra/core/lib"
+import { Class } from "../../infra/core/lib";
 
 /**
  * Base class for all domain events
  */
 export class DomainEvent {
-    constructor(
-        readonly timeMsec: number = Number(new Date())
-    ) {}
+    constructor(readonly timeMsec: number = Number(new Date())) {}
 
     toString(): string {
         return Object.entries(this)
-            .map(([k,v]) => `${k}:${v}`)
+            .map(([k, v]) => `${k}:${v}`)
             .sort()
-            .join(', ')
+            .join(", ");
     }
 }
 
@@ -22,45 +20,48 @@ export class DomainEventError extends Error {}
  * Interface of subscriber for domain events
  */
 export interface DomainEventSubscriber {
-    handleEvent(event: DomainEvent): void
+    handleEvent(event: DomainEvent): void;
 }
 
 /**
  * Singleton domain events publisher. Registers subscribers and accepts publications.
  */
 export class DomainEventPublisher {
-    private static instances: Map<string, DomainEventPublisher> = new Map()
+    private static instances: Map<string, DomainEventPublisher> = new Map();
 
-    private subscriptions: Map<typeof DomainEvent, Set<DomainEventSubscriber>> = new Map()
+    private subscriptions: Map<typeof DomainEvent, Set<DomainEventSubscriber>> =
+        new Map();
 
-    private getSubscribedClasses(subscriber: DomainEventSubscriber): Set<typeof DomainEvent> {
-        const res: Set<typeof DomainEvent> = new Set()
+    private getSubscribedClasses(
+        subscriber: DomainEventSubscriber
+    ): Set<typeof DomainEvent> {
+        const res: Set<typeof DomainEvent> = new Set();
         for (const [EventClass, subscribers] of this.subscriptions.entries()) {
             if (subscribers.has(subscriber)) {
-                res.add(EventClass)
+                res.add(EventClass);
             }
         }
-        return res
+        return res;
     }
 
     /**
      * Factory method returning named singleton instance.
      * Different publishers are completely independent.
      */
-    static getInstance(name: string = ''): DomainEventPublisher {
-        let publisher = this.instances.get(name)
+    static getInstance(name: string = ""): DomainEventPublisher {
+        let publisher = this.instances.get(name);
         if (!publisher) {
-            publisher = new DomainEventPublisher()
-            this.instances.set(name, publisher)
+            publisher = new DomainEventPublisher();
+            this.instances.set(name, publisher);
         }
-        return publisher
+        return publisher;
     }
 
     /**
      * Removes all subscribers from publisher.
      */
     reset() {
-        this.subscriptions = new Map()
+        this.subscriptions = new Map();
     }
 
     /**
@@ -71,9 +72,12 @@ export class DomainEventPublisher {
             if (event instanceof EventClass) {
                 for (const subscriber of subscribers) {
                     try {
-                        subscriber.handleEvent(event)
+                        subscriber.handleEvent(event);
                     } catch (e) {
-                        console.error(`Subscriber ${subscriber} failed on handleEvent`, e)
+                        console.error(
+                            `Subscriber ${subscriber} failed on handleEvent`,
+                            e
+                        );
                     }
                 }
             }
@@ -85,25 +89,33 @@ export class DomainEventPublisher {
      *
      * For example, if subscribed for DomainEvent subscriber will receive all events because all events subclass DomainEvent
      */
-    subscribe(subscriber: DomainEventSubscriber, eventClass: Class<DomainEvent> = DomainEvent): void {
+    subscribe(
+        subscriber: DomainEventSubscriber,
+        eventClass: Class<DomainEvent> = DomainEvent
+    ): void {
         for (const EventClass of this.getSubscribedClasses(subscriber)) {
-            if (EventClass.prototype instanceof eventClass ||
+            if (
+                EventClass.prototype instanceof eventClass ||
                 eventClass.prototype instanceof EventClass ||
                 EventClass === eventClass
             ) {
                 throw new DomainEventError(
-                    `Cannot subscribe for ${eventClass} because already subscribed for ${EventClass}`)
+                    `Cannot subscribe for ${eventClass} because already subscribed for ${EventClass}`
+                );
             }
         }
-        const set = this.subscriptions.get(eventClass) || new Set()
-        set.add(subscriber)
-        this.subscriptions.set(eventClass, set)
+        const set = this.subscriptions.get(eventClass) || new Set();
+        set.add(subscriber);
+        this.subscriptions.set(eventClass, set);
     }
 
     /**
      * Unsubscribe for particular class
      */
-    unsubscribe(subscriber: DomainEventSubscriber, eventClass: typeof DomainEvent = DomainEvent): void {
-        this.subscriptions.get(eventClass)?.delete(subscriber)
+    unsubscribe(
+        subscriber: DomainEventSubscriber,
+        eventClass: typeof DomainEvent = DomainEvent
+    ): void {
+        this.subscriptions.get(eventClass)?.delete(subscriber);
     }
 }

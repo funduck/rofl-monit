@@ -1,25 +1,24 @@
+import { DomainValue } from "../core/value";
+
 /**
  * Base notification about changes with Object.
  */
-export class Notification {
+export class Notification extends DomainValue {
     public constructor(
         readonly title: string,
-        readonly timeMsec: number
-    ) {}
+        readonly timeMsec: number,
+        ...args: ConstructorParameters<typeof DomainValue>
+    ) {
+        super(...args);
+    }
 
     public getLocaleDateTimeString(): string {
-        return new Date(this.timeMsec).toLocaleString()
+        return new Date(this.timeMsec).toLocaleString();
     }
 
     public toString(): string {
-        return [
-            this.title,
-            this.getLocaleDateTimeString(),
-        ].concat(
-            Object.entries(this)
-            .filter(([k,v]) => k != "title" && k != "timeMsec")
-            .map(([k,v]) => `${k}=${v}`)
-            .sort()
-        ).join('\n')
+        return `${this.getLocaleDateTimeString()}\n${this.title}\n${
+            this.value
+        }`;
     }
 }

@@ -3,7 +3,7 @@ import { MonitoringEvent } from "../domain/events/monitoring_event";
 import { DockerMonitoring } from "../interface/docker_monitoring";
 
 /**
- * Receives events from docker and generates MonitoringEvents and published them to the system
+ * Connects docker and domain.
  */
 export function MonitoringService() {
     const publisher = DomainEventPublisher.getInstance();
