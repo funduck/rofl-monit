@@ -3,6 +3,7 @@ import { DomainRepository } from "../domain/core/repository";
 import { ContainerEventStateChanged } from "../domain/events/container_events";
 import { SignalingSendAll } from "../domain/services/signaling_send_all";
 import { InMemoryContainerRepository } from "../infra/in_memory_container_repository";
+import { logger } from "../infra/logger";
 
 /**
  * Connects signaling strategies and domain events.
@@ -16,4 +17,5 @@ export function SignalingService() {
     );
     const containerSignalling = new SignalingSendAll(containerRepo, publisher);
     publisher.subscribe(containerSignalling, ContainerEventStateChanged);
+    logger.info("Started SignalingService");
 }

@@ -1,5 +1,6 @@
 import { DomainEventPublisher } from "../domain/core/event";
 import { NotificationEvent } from "../domain/events/notification_events";
+import { logger } from "../infra/logger";
 import { ConsoleNotificator } from "../interface/console_notificator";
 
 /**
@@ -18,4 +19,5 @@ export function NotificatorService() {
         },
         NotificationEvent
     );
+    logger.info("Started NotificatorService");
 }

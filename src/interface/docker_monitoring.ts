@@ -3,6 +3,7 @@ import { MonitoringInterface } from "./monitoring_interface";
 import Docker from "dockerode";
 import JSONStream from "jsonstream";
 import { monitoringEventFromDockerEvent } from "./docker_adapter";
+import { logger } from "../infra/logger";
 
 export class DockerMonitoring implements MonitoringInterface {
     private docker: Docker;
@@ -14,6 +15,7 @@ export class DockerMonitoring implements MonitoringInterface {
         this.monitoringEventsStream = new Transform({
             transform(obj, encoding, callback) {
                 try {
+                    logger.trace(`Docker event ${obj}`);
                     const event = monitoringEventFromDockerEvent(obj);
                     if (event) callback(null, event);
                 } catch (err) {
@@ -31,6 +33,7 @@ export class DockerMonitoring implements MonitoringInterface {
     async start(): Promise<void> {
         // @ts-ignore
         this.rawEventsStream = await this.docker.getEvents();
+        logger.info("Connected to docker");
         this.rawEventsStream!.pipe(JSONStream.parse("*")).pipe(
             this.monitoringEventsStream
         );

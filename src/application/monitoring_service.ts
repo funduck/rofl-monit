@@ -1,5 +1,6 @@
 import { DomainEventPublisher } from "../domain/core/event";
 import { MonitoringEvent } from "../domain/events/monitoring_event";
+import { logger } from "../infra/logger";
 import { DockerMonitoring } from "../interface/docker_monitoring";
 
 /**
@@ -12,16 +13,18 @@ export function MonitoringService() {
     const monitoring = new DockerMonitoring();
     monitoring.start().then(
         () => {
+            logger.info("Started MonitoringService");
             const monitEventsStream = monitoring.getMonitoringEventsStream();
             monitEventsStream.on("data", (monitEvent) => {
+                logger.trace(`MonitoringEvent ${monitEvent}`);
                 publisher.publish(monitEvent as MonitoringEvent);
             });
             monitEventsStream.on("error", (err) => {
-                console.error(err);
+                logger.error(err);
             });
         },
         (err) => {
-            console.error(err);
+            logger.error(err);
         }
     );
 }

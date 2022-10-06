@@ -3,6 +3,7 @@ import { MonitoringEventContainer } from "../domain/events/container_monitoring_
 import { DomainEventPublisher } from "../domain/core/event";
 import { InMemoryContainerRepository } from "../infra/in_memory_container_repository";
 import { DomainRepository } from "../domain/core/repository";
+import { logger } from "../infra/logger";
 
 /**
  * Splits stream of monitoring events to different observers.
@@ -16,4 +17,5 @@ export function ObserverService() {
     );
     const containerObserver = new ContainerObserver(containerRepo, publisher);
     publisher.subscribe(containerObserver, MonitoringEventContainer);
+    logger.info("Started ObserverService");
 }
