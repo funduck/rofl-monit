@@ -15,10 +15,11 @@ export class DockerMonitoring implements MonitoringInterface {
         this.monitoringEventsStream = new Transform({
             transform(obj, encoding, callback) {
                 try {
-                    logger.trace(`Docker event ${obj}`);
+                    logger.debug(`Docker event ${obj}`);
                     const event = monitoringEventFromDockerEvent(obj);
                     if (event) callback(null, event);
                 } catch (err) {
+                    logger.error(err);
                     callback(err as Error);
                 }
             },

@@ -1,4 +1,5 @@
 import { Class } from "../../infra/core/lib";
+import { logger } from "../../infra/logger";
 
 /**
  * Base class for all domain events
@@ -72,10 +73,11 @@ export class DomainEventPublisher {
             if (event instanceof EventClass) {
                 for (const subscriber of subscribers) {
                     try {
+                        logger.debug(`${subscriber} handling ${event}`);
                         subscriber.handleEvent(event);
                     } catch (e) {
-                        console.error(
-                            `Subscriber ${subscriber} failed on handleEvent`,
+                        logger.error(
+                            `${subscriber} failed to handle ${event}`,
                             e
                         );
                     }

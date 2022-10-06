@@ -16,7 +16,7 @@ export function MonitoringService() {
             logger.info("Started MonitoringService");
             const monitEventsStream = monitoring.getMonitoringEventsStream();
             monitEventsStream.on("data", (monitEvent) => {
-                logger.trace(`MonitoringEvent ${monitEvent}`);
+                logger.debug(`MonitoringEvent ${monitEvent}`);
                 publisher.publish(monitEvent as MonitoringEvent);
             });
             monitEventsStream.on("error", (err) => {

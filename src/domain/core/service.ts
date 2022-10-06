@@ -1,4 +1,9 @@
-import { DomainEvent, DomainEventPublisher, DomainEventSubscriber } from "./event";
+import { logger } from "../../infra/logger";
+import {
+    DomainEvent,
+    DomainEventPublisher,
+    DomainEventSubscriber,
+} from "./event";
 
 /**
  * Base class for domain services.
@@ -6,16 +11,18 @@ import { DomainEvent, DomainEventPublisher, DomainEventSubscriber } from "./even
  * Application may subscribe it for events.
  */
 export abstract class DomainService implements DomainEventSubscriber {
-
-    constructor(protected eventPublisher: DomainEventPublisher) {}
+    constructor(protected eventPublisher: DomainEventPublisher) {
+        logger.info(`Initialing domain service ${this}`);
+    }
 
     toString(): string {
-        return `${this.constructor.name}`
+        return `${this.constructor.name}`;
     }
 
     abstract handleEvent(event: DomainEvent): void;
 
     protected emitEvent(event: DomainEvent): void {
-        this.eventPublisher.publish(event)
+        logger.debug(`${this} publishes ${event}`);
+        this.eventPublisher.publish(event);
     }
 }
