@@ -14,17 +14,11 @@ export class SignalingSendAll extends DomainService {
         super(publisher);
     }
 
-    handleEvent(event: DomainEvent): void {
-        if (event instanceof ContainerEventStateChanged) {
-            this.emitEvent(
-                new ContainerNotificationEvent(
-                    renderStateChange(
-                        this.containerRepo.get(
-                            (event as ContainerEventStateChanged).containerId
-                        )
-                    )
-                )
-            );
-        }
+    handleEvent(event: ContainerEventStateChanged): void {
+        this.emitEvent(
+            new ContainerNotificationEvent(
+                renderStateChange(this.containerRepo.get(event.containerId))
+            )
+        );
     }
 }

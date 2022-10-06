@@ -38,10 +38,7 @@ export class ContainerObserver extends DomainService {
         super(publisher);
     }
 
-    handleEvent(event: DomainEvent): void {
-        if (!(event instanceof MonitoringEventContainer)) {
-            return;
-        }
+    handleEvent(event: MonitoringEventContainer): void {
         this.appendContainerEvent(event);
         if (!this.containerCache.has(event.observableId)) {
             this.ensureContainerExists(event);
