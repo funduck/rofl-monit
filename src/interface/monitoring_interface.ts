@@ -1,10 +1,12 @@
-import { Readable } from 'node:stream'
+import { Readable } from "node:stream";
 
 export abstract class MonitoringInterface {
-    abstract start(): Promise<void>
+    abstract start(): Promise<void>;
+
+    abstract stop(): Promise<void>;
 
     /**
      * Should return ReadableStream of MonitoringEvents
      */
-    abstract getMonitoringEventsStream(): Readable
+    abstract getMonitoringEventsStream(): Readable;
 }

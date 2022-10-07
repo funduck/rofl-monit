@@ -1,5 +1,6 @@
 import { DomainEventPublisher } from "../domain/core/event";
 import { MonitoringEvent } from "../domain/events/monitoring_event";
+import { TaskCancels } from "../infra/core/lib";
 import { logger } from "../infra/logger";
 import { DockerMonitoring } from "../interface/docker_monitoring";
 
@@ -9,11 +10,17 @@ import { DockerMonitoring } from "../interface/docker_monitoring";
  */
 export function MonitoringService() {
     const publisher = DomainEventPublisher.getInstance();
-
     const monitoring = new DockerMonitoring();
+
+    function monitoringCancel() {
+        monitoring.stop();
+    }
+    TaskCancels.add(monitoringCancel);
+
     monitoring.start().then(
         () => {
             logger.info("Started MonitoringService");
+
             const monitEventsStream = monitoring.getMonitoringEventsStream();
             monitEventsStream.on("data", (monitEvent) => {
                 logger.debug(`MonitoringEvent ${monitEvent}`);
@@ -25,6 +32,7 @@ export function MonitoringService() {
         },
         (err) => {
             logger.error(err);
+            TaskCancels.delete(monitoringCancel);
         }
     );
 }

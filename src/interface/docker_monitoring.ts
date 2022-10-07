@@ -40,6 +40,18 @@ export class DockerMonitoring implements MonitoringInterface {
         );
     }
 
+    stop(): Promise<void> {
+        if (!this.rawEventsStream) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+            this.rawEventsStream!.on("close", () => {
+                logger.info("Destroyed docker events stream");
+                resolve();
+            });
+            this.rawEventsStream!.on("error", reject);
+            this.rawEventsStream!.destroy();
+        });
+    }
+
     getMonitoringEventsStream(): Readable {
         return this.monitoringEventsStream;
     }
