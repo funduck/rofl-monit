@@ -15,7 +15,7 @@
         "start": "node build/main.js",
         "run": "yarn run build && yarn run start",
         "test": "jest",
-        "docker-build": "docker rm -f rofl-monit && docker build -f Dockerfile.slim -t rofl-monit .",
+        "docker-build": "docker rm -f rofl-monit && docker build -f Dockerfile -t rofl-monit .",
         "docker-run": "docker run --name rofl-monit -v /var/run/docker.sock:/var/run/docker.sock rofl-monit"
     },
     "dependencies": {
