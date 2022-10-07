@@ -22,7 +22,7 @@ export abstract class DomainService implements DomainEventSubscriber {
     abstract handleEvent(event: DomainEvent): void;
 
     protected emitEvent(event: DomainEvent): void {
-        logger.debug(`${this} publishes ${event}`);
+        logger.debug(`${this} publishes ${event.constructor.name}`);
         this.eventPublisher.publish(event);
     }
 }

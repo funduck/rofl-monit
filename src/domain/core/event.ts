@@ -69,11 +69,14 @@ export class DomainEventPublisher {
      * Immediate publish to present subscribers. Handlers are called syncronously in random order.
      */
     publish(event: DomainEvent): void {
+        logger.trace("DomainEventPublisher.publish", event);
         for (const [EventClass, subscribers] of this.subscriptions.entries()) {
             if (event instanceof EventClass) {
                 for (const subscriber of subscribers) {
                     try {
-                        logger.trace(`${subscriber} handling ${event}`);
+                        logger.debug(
+                            `${subscriber} handling ${event.constructor.name}`
+                        );
                         subscriber.handleEvent(event);
                     } catch (e) {
                         logger.error(
