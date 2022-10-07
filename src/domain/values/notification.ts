@@ -1,3 +1,4 @@
+import { msecToSec } from "../../infra/core/lib";
 import { DomainValue } from "../core/value";
 
 /**
@@ -13,7 +14,7 @@ export class Notification extends DomainValue {
     }
 
     public getLocaleDateTimeString(): string {
-        return new Date(this.timeMsec).toLocaleString();
+        return new Date(msecToSec(this.timeMsec)).toLocaleString();
     }
 
     public toString(): string {

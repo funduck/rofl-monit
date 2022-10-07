@@ -28,8 +28,7 @@ export class ContainerObserver extends DomainService {
         DomainEntityId<Container>,
         Array<MonitoringEventContainer>
     > = new Map();
-    private containerCache: Map<DomainEntityId<Container>, Container> =
-        new Map();
+    private containerCache: Map<string, Container> = new Map();
 
     constructor(
         private containerRepo: InMemoryDomainRepository<Container>,
@@ -40,7 +39,7 @@ export class ContainerObserver extends DomainService {
 
     handleEvent(event: MonitoringEventContainer): void {
         this.appendContainerEvent(event);
-        if (!this.containerCache.has(event.observableId)) {
+        if (!this.containerCache.has(String(event.observableId))) {
             this.ensureContainerExists(event);
         }
         this.processContainerEvents(event.observableId);
@@ -66,8 +65,9 @@ export class ContainerObserver extends DomainService {
         if (!queue.length) {
             return;
         }
-        const container = this.containerCache.get(containerId)!;
         const lastEvent = queue.at(-1)!;
+        this.eventQueues.set(containerId, []);
+        const container = this.containerCache.get(String(containerId))!;
         let state: ContainerState = ObservableStateUnknown;
         _: {
             /**
@@ -103,7 +103,7 @@ export class ContainerObserver extends DomainService {
                 break _;
             }
         }
-        if (state != ObservableStateUnknown) {
+        if (state != ObservableStateUnknown && state != container.state()) {
             container.transition(state, lastEvent.timeMsec);
             this.containerRepo.save(container);
             const event = new ContainerEventStateChanged(
@@ -122,7 +122,7 @@ export class ContainerObserver extends DomainService {
         if (!exists) {
             container = new Container(event.image, event.observableId);
             this.containerRepo.save(container);
-            this.containerCache.set(container.id, container);
+            this.containerCache.set(String(container.id), container);
         }
     }
 }

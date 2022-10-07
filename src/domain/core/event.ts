@@ -73,7 +73,7 @@ export class DomainEventPublisher {
             if (event instanceof EventClass) {
                 for (const subscriber of subscribers) {
                     try {
-                        logger.debug(`${subscriber} handling ${event}`);
+                        logger.trace(`${subscriber} handling ${event}`);
                         subscriber.handleEvent(event);
                     } catch (e) {
                         logger.error(

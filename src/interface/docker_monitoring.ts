@@ -15,9 +15,9 @@ export class DockerMonitoring implements MonitoringInterface {
         this.monitoringEventsStream = new Transform({
             transform(obj, encoding, callback) {
                 try {
-                    logger.debug(`Docker event ${obj}`);
+                    logger.trace(`Docker event: ${JSON.stringify(obj)}`);
                     const event = monitoringEventFromDockerEvent(obj);
-                    if (event) callback(null, event);
+                    callback(null, event);
                 } catch (err) {
                     logger.error(err);
                     callback(err as Error);
@@ -35,7 +35,7 @@ export class DockerMonitoring implements MonitoringInterface {
         // @ts-ignore
         this.rawEventsStream = await this.docker.getEvents();
         logger.info("Connected to docker");
-        this.rawEventsStream!.pipe(JSONStream.parse("*")).pipe(
+        this.rawEventsStream!.pipe(JSONStream.parse(null)).pipe(
             this.monitoringEventsStream
         );
     }

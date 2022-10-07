@@ -3,7 +3,7 @@ import { NotificatorInterface } from "./notificator_interface";
 
 export class ConsoleNotificator extends NotificatorInterface {
     send(notification: Notification): Promise<void> {
-        console.log(notification.toString());
+        console.log("\x1b[43m%s\x1b[0m", notification.toString());
         return Promise.resolve();
     }
 }

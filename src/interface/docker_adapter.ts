@@ -12,6 +12,7 @@ import {
     MonitoringEventContainerStopped,
 } from "../domain/events/container_monitoring_events";
 import { MonitoringEvent } from "../domain/events/monitoring_event";
+import { nanoToMsec } from "../infra/core/lib";
 
 export type DockerEvent = {
     Type: string;
@@ -43,7 +44,7 @@ function getContainerEvent(
     const image = dockerEvent.Actor.Attributes.image;
     const name = dockerEvent.Actor.Attributes.name;
     const id = Id<Container>(name);
-    const timeMsec = Number(dockerEvent.timeNano.toString().slice(0, -3));
+    const timeMsec = nanoToMsec(dockerEvent.timeNano);
 
     const dfltArgs: [string, string, DomainEntityId<Container>, number] = [
         image,
