@@ -2,7 +2,7 @@ import {
     renderRofl,
     renderRoflEnded,
     renderStateChange,
-} from "../../infra/container_notifications_renderer";
+} from "../../infra/render_container_notifications";
 import { now } from "../../infra/core/lib";
 import { Container } from "../aggregates/container";
 import { DomainEvent, DomainEventPublisher } from "../core/event";
@@ -29,15 +29,23 @@ class RoflNotifiedAt extends ObservableAttribute {
  * Signaling strategy that detects when Observable is in fail-restart loop or healthy-unhealthy loop
  */
 export class SignalingDetectLoops extends DomainService {
-    private repeatNotificationMsec = 60 * 60 * 1000; // 60 minutes
-    private roflDetectWindowMsec = 10 * 60 * 1000; // 10 minutes
-    private roflDetectCount = 3;
+    readonly repeatNotificationMsec: number;
+    readonly roflDetectWindowMsec: number;
+    readonly roflDetectCount: number;
 
     constructor(
         private containerRepo: InMemoryDomainRepository<Container>,
-        publisher: DomainEventPublisher
+        publisher: DomainEventPublisher,
+        {
+            roflDetectCount = 3,
+            roflDetectWindowMsec = 10 * 60 * 1000, // 10 minutes
+            repeatNotificationMsec = 60 * 60 * 1000, // 60 minutes
+        }
     ) {
         super(publisher);
+        this.roflDetectCount = roflDetectCount;
+        this.roflDetectWindowMsec = roflDetectWindowMsec;
+        this.repeatNotificationMsec = repeatNotificationMsec;
     }
 
     /**

@@ -1,4 +1,4 @@
-import { renderStateChange } from "../../infra/container_notifications_renderer";
+import { renderStateChange } from "../../infra/render_container_notifications";
 import { Container } from "../aggregates/container";
 import { DomainEvent, DomainEventPublisher } from "../core/event";
 import { InMemoryDomainRepository } from "../core/repository";
