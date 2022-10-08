@@ -6,6 +6,9 @@ import { DomainService } from "../core/service";
 import { ContainerEventStateChanged } from "../events/container_events";
 import { ContainerNotificationEvent } from "../events/notification_events";
 
+/**
+ * Signaling strategy that just sends all events instantly
+ */
 export class SignalingSendAll extends DomainService {
     constructor(
         private containerRepo: InMemoryDomainRepository<Container>,

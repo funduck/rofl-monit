@@ -6,6 +6,13 @@ export interface Class<T> {
 }
 
 /**
+ * Helper type for class constuctor.
+ */
+export interface Constructor<T> {
+    (...args: any[]): T;
+}
+
+/**
  * Async function sleep(milliseconds).
  */
 export function sleep(ms: number): Promise<void> {
@@ -23,6 +30,13 @@ export function nanoToMsec(time: number): number {
  * Convertion milli seconds to seconds, with loss of precision.
  */
 export const msecToSec = nanoToMsec;
+
+/**
+ * Millis since January 1, 1970
+ */
+export function now(): number {
+    return Number(new Date());
+}
 
 /**
  * Allows to remember what should be called before termination.
