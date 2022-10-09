@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Jest Tests",
+            "name": "Debug Current Jest Test",
             "type": "node",
             "request": "launch",
             "runtimeArgs": [
@@ -10,7 +10,8 @@
                 "${workspaceRoot}/node_modules/jest/bin/jest.js",
                 "--runInBand",
                 "--coverage",
-                "false"
+                "false",
+                "${fileBasenameNoExtension}"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
