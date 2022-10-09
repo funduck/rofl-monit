@@ -29,7 +29,7 @@ export class Observable extends DomainEntity {
     ];
     protected stateHistoryMaxLen: number = 1440; // 1 in minute, 24h
 
-    protected attributes: Map<
+    public attributes: Map<
         Constructor<ObservableAttribute>,
         ObservableAttribute
     > = new Map();

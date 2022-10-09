@@ -23,3 +23,7 @@ export class Notification extends DomainValue {
         }`;
     }
 }
+
+export class NotificationContainerStateChange extends Notification {}
+export class NotificationContainerRofl extends Notification {}
+export class NotificationContainerRoflEnded extends Notification {}

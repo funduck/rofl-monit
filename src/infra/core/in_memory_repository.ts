@@ -38,7 +38,7 @@ export abstract class InMemoryRepository<T extends DomainEntity>
     }
 
     save(entity: T): void {
-        this.mem.set(String(entity.id), entity);
+        this.mem.set(String(entity.id), this.clone(entity));
     }
 
     delete(entityId: DomainEntityId<T>): void {

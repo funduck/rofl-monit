@@ -1,4 +1,4 @@
-import { InMemoryContainerRepository } from "../../infra/in_memory_container_repository";
+import { InMemoryContainerRepository } from "../../infra/container_in_memory_repository";
 import { Container } from "../aggregates/container";
 import { Id } from "../core/entity";
 import { DomainEvent, DomainEventPublisher } from "../core/event";
@@ -9,7 +9,7 @@ import {
     ContainerStateRunning,
 } from "../values/container_states";
 import { Notification } from "../values/notification";
-import { SignalingSendAll } from "./signaling_send_all";
+import { SignalingSendAll } from "./container_signaling_send_all";
 
 describe("SignalingSendAll", () => {
     const container = new Container("image", Id<Container>("id"));
@@ -27,6 +27,8 @@ describe("SignalingSendAll", () => {
         eventPublisher.subscribe(subscriber, NotificationEvent);
         container.transition(ContainerStateRunning, timeMsec);
         container.transition(ContainerStateDied, timeMsec + 1);
+        containerRepo.save(container);
+
         eventPublisher.publish(
             new ContainerEventStateChanged(
                 container.id,

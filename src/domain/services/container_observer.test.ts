@@ -7,7 +7,7 @@ import {
     ContainerStateRunning,
     ContainerStateStopped,
 } from "../values/container_states";
-import { InMemoryContainerRepository } from "../../infra/in_memory_container_repository";
+import { InMemoryContainerRepository } from "../../infra/container_in_memory_repository";
 import { EntityNotFound } from "../core/repository";
 import {
     MonitoringEventContainer,
