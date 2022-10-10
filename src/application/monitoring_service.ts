@@ -8,10 +8,13 @@ import { DockerMonitoring } from "../interface/docker_monitoring";
  * Connects docker and domain.
  * Produces MonitoringEvent.
  */
-export function MonitoringService() {
-    const publisher = DomainEventPublisher.getInstance();
-    const monitoring = new DockerMonitoring();
-
+export function MonitoringService({
+    publisher,
+    monitoring,
+}: {
+    publisher: DomainEventPublisher;
+    monitoring: DockerMonitoring;
+}) {
     function monitoringCancel() {
         monitoring.stop();
     }
