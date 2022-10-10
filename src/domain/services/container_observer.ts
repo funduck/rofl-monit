@@ -28,7 +28,6 @@ export class ContainerObserver extends DomainService {
         DomainEntityId<Container>,
         Array<MonitoringEventContainer>
     > = new Map();
-    private containerCache: Map<string, Container> = new Map();
 
     constructor(
         private containerRepo: InMemoryDomainRepository<Container>,
@@ -39,9 +38,7 @@ export class ContainerObserver extends DomainService {
 
     handleEvent(event: MonitoringEventContainer): void {
         this.appendContainerEvent(event);
-        if (!this.containerCache.has(String(event.observableId))) {
-            this.ensureContainerExists(event);
-        }
+        this.ensureContainerExists(event);
         this.processContainerEvents(event.observableId);
     }
 
@@ -67,7 +64,7 @@ export class ContainerObserver extends DomainService {
         }
         const lastEvent = queue.at(-1)!;
         this.eventQueues.set(containerId, []);
-        const container = this.containerCache.get(String(containerId))!;
+        const container = this.containerRepo.get(containerId);
         let state: ContainerState = ObservableStateUnknown;
         _: {
             /**
@@ -122,7 +119,6 @@ export class ContainerObserver extends DomainService {
         if (!exists) {
             container = new Container(event.image, event.observableId);
             this.containerRepo.save(container);
-            this.containerCache.set(String(container.id), container);
         }
     }
 }
