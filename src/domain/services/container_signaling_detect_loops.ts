@@ -48,7 +48,7 @@ export class SignalingDetectLoops extends DomainService {
             roflDetectWindowMsec: number;
         } = {
             roflDetectCount: 3,
-            roflDetectWindowMsec: 10 * 60 * 1000, // 10 minutes
+            roflDetectWindowMsec: 1 * 60 * 1000, // 10 minutes
         }
     ) {
         super(publisher);

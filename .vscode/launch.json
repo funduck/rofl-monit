@@ -17,7 +17,7 @@
             "internalConsoleOptions": "neverOpen"
         },
         {
-            "name": "Launch Typescript",
+            "name": "Launch Typescript App",
             "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/src/main.ts",

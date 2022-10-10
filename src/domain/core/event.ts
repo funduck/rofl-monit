@@ -1,11 +1,11 @@
-import { Class } from "../../infra/core/lib";
+import { Class, now } from "../../infra/core/lib";
 import { logger } from "../../infra/logger";
 
 /**
  * Base class for all domain events
  */
 export class DomainEvent {
-    constructor(readonly timeMsec: number = Number(new Date())) {}
+    constructor(readonly timeMsec: number = now()) {}
 
     toString(): string {
         return Object.entries(this)

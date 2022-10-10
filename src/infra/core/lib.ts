@@ -25,13 +25,15 @@ export function sleep(ms: number): Promise<void> {
  * Convertion nano seconds to milli seconds, with loss of precision.
  */
 export function nanoToMsec(time: number): number {
-    return Number(time.toString().slice(0, -3));
+    return Number(time.toString().slice(0, -6));
 }
 
 /**
  * Convertion milli seconds to seconds, with loss of precision.
  */
-export const msecToSec = nanoToMsec;
+export function msecToSec(time: number): number {
+    return Number(time.toString().slice(0, -3));
+}
 
 /**
  * Millis since January 1, 1970
