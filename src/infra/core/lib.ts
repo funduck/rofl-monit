@@ -29,13 +29,6 @@ export function nanoToMsec(time: number): number {
 }
 
 /**
- * Convertion milli seconds to seconds, with loss of precision.
- */
-export function msecToSec(time: number): number {
-    return Number(time.toString().slice(0, -3));
-}
-
-/**
  * Millis since January 1, 1970
  */
 export function now(): number {
