@@ -1,3 +1,4 @@
+import { TaskCancels } from "../../infra/core/lib";
 import { logger } from "../../infra/logger";
 import {
     DomainEvent,
@@ -13,6 +14,7 @@ import {
 export abstract class DomainService implements DomainEventSubscriber {
     constructor(protected eventPublisher: DomainEventPublisher) {
         logger.info(`Initialing domain service ${this}`);
+        TaskCancels.add(() => this.stop());
     }
 
     toString(): string {
@@ -24,5 +26,15 @@ export abstract class DomainService implements DomainEventSubscriber {
     protected emitEvent(event: DomainEvent): void {
         logger.debug(`${this} publishes ${event.constructor.name}`);
         this.eventPublisher.publish(event);
+    }
+
+    /**
+     * Should be called to stop the service.
+     * For example clear timers here.
+     */
+    stop(): void {
+        logger.debug(
+            `${this}.stop() is empty, are you sure nothing should be cleaned up?`
+        );
     }
 }

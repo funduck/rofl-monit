@@ -1,3 +1,5 @@
+import { logger } from "../logger";
+
 /**
  * Helper type for class as parameter.
  */
@@ -39,7 +41,7 @@ export function now(): number {
 }
 
 /**
- * Allows to remember what should be called before termination.
+ * Global repository of what should be called before termination of an app.
  * When app decides to finish it calls all cancels and Nodejs loop should finish.
  */
 export class TaskCancels {
@@ -53,7 +55,10 @@ export class TaskCancels {
         this.set.delete(cancel);
     }
 
-    static items(): Array<CallableFunction> {
-        return Array.from(this.set);
+    static cancelAll(): void {
+        logger.info(`Canceling all tasks`);
+        for (const cancel of this.set) {
+            cancel();
+        }
     }
 }
