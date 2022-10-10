@@ -91,6 +91,10 @@ describe("SignalingDetectLoops", () => {
         );
     }
 
+    afterAll(() => {
+        service.stop();
+    });
+
     test(`settings roflDetectWindowMsec: ${roflDetectWindowMsec}`, () => {});
 
     test("should receive notification when starts", () => {
@@ -129,7 +133,7 @@ describe("SignalingDetectLoops", () => {
         expectNoNotification();
     });
 
-    test("should receive notifications rofl ended", () => {
+    test("should receive notifications rofl ended on new event", () => {
         transition(ContainerStateRunning, 2050);
         expectNotification(NotificationContainerRoflEnded);
     });
@@ -137,5 +141,22 @@ describe("SignalingDetectLoops", () => {
     test("should receive regular notification when container dies", () => {
         transition(ContainerStateDied, 2055);
         expectNotification(NotificationContainerStateChange);
+    });
+
+    test("should receive ROFL when container dies a lot", () => {
+        transition(ContainerStateRunning, 2110);
+        expectNotification();
+        transition(ContainerStateDied, 2120);
+        expectNotification();
+        transition(ContainerStateRunning, 2130);
+        expectNotification();
+        transition(ContainerStateDied, 2140);
+        expectNotification(NotificationContainerRofl);
+    });
+
+    test("should receive notifications rofl ended when roflDetectWindowMsec is passed", () => {
+        _now = 3000;
+        service.checkAllRofls();
+        expectNotification(NotificationContainerRoflEnded);
     });
 });
