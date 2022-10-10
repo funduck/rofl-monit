@@ -1,3 +1,4 @@
+import { strict } from "node:assert";
 import { MonitoringService } from "./application/monitoring_service";
 import { NotificatorService } from "./application/notificator_service";
 import { ObserverService } from "./application/observer_service";
@@ -12,6 +13,8 @@ import { TaskCancels } from "./infra/core/lib";
 import { logger } from "./infra/logger";
 import { ConsoleNotificator } from "./interface/console_notificator";
 import { DockerMonitoring } from "./interface/docker_monitoring";
+import { NotificatorInterface } from "./interface/notificator_interface";
+import { TelegramNotificator } from "./interface/telegram_notificator";
 
 function main() {
     logger.setDefaultLevel(logger.levels.DEBUG);
@@ -34,8 +37,21 @@ function main() {
             );
     }
 
-    const notificator = new ConsoleNotificator();
-    // TODO APP_EXPORTER=="telegram"
+    let notificator: NotificatorInterface;
+    switch (process.env.APP_EXPORTER) {
+        case "telegram": {
+            const botToken = process.env.APP_TELEGRAM_BOT_TOKEN;
+            strict(botToken, "APP_TELEGRAM_BOT_TOKEN is not specified!");
+
+            const chatId = process.env.APP_TELEGRAM_CHAT;
+            strict(chatId, "APP_TELEGRAM_CHAT is not specified!");
+
+            notificator = new TelegramNotificator(chatId!, botToken!);
+            break;
+        }
+        default:
+            notificator = new ConsoleNotificator();
+    }
 
     const monitoring = new DockerMonitoring();
 
