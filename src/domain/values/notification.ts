@@ -4,22 +4,20 @@ import { DomainValue } from "../core/value";
  * Base notification about changes with Object.
  */
 export class Notification extends DomainValue {
+    readonly html: string;
+
     public constructor(
-        readonly title: string,
-        readonly timeMsec: number,
-        ...args: ConstructorParameters<typeof DomainValue>
+        { text, html }: { text: string; html?: string } = {
+            text: "",
+            html: "",
+        }
     ) {
-        super(...args);
+        super(text);
+        this.html = html || text;
     }
 
-    public getLocaleDateTimeString(): string {
-        return new Date(this.timeMsec).toLocaleString();
-    }
-
-    public toString(): string {
-        return `${this.getLocaleDateTimeString()}\n${this.title}\n${
-            this.value
-        }`;
+    public toHTML(): string {
+        return this.html;
     }
 }
 

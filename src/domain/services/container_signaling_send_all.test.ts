@@ -1,7 +1,7 @@
 import { InMemoryContainerRepository } from "../../infra/container_in_memory_repository";
 import { Container } from "../aggregates/container";
 import { Id } from "../core/entity";
-import { DomainEvent, DomainEventPublisher } from "../core/event";
+import { DomainEventPublisher } from "../core/event";
 import { ContainerEventStateChanged } from "../events/container_events";
 import { NotificationEvent } from "../events/notification_events";
 import {
@@ -42,6 +42,5 @@ describe("SignalingSendAll", () => {
             subscriber.handleEvent.mock.lastCall![0];
         expect(notif).toBeInstanceOf(NotificationEvent);
         expect(notif.notification).toBeInstanceOf(Notification);
-        expect(notif.notification.timeMsec).toBe(timeMsec + 1);
     });
 });

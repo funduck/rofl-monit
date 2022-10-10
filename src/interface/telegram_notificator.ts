@@ -15,7 +15,7 @@ export class TelegramNotificator extends NotificatorInterface {
     }
 
     async send(notification: Notification): Promise<void> {
-        await this.telegram.sendMessage(this.chatId, notification.toString(), {
+        await this.telegram.sendMessage(this.chatId, notification.toHTML(), {
             parse_mode: "HTML",
         });
     }

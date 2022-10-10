@@ -27,7 +27,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerStarted,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662476146333437,
+                    timeMsec: 1662476146333,
                     image: "snippet.image",
                 },
             },
@@ -51,7 +51,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerKilled,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662475946796365,
+                    timeMsec: 1662475946796,
                     image: "snippet.image",
                 },
             },
@@ -75,7 +75,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerDied,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662476146333437,
+                    timeMsec: 1662476146333,
                     image: "snippet.image",
                 },
             },
@@ -99,7 +99,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerStopped,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662476146333437,
+                    timeMsec: 1662476146333,
                     image: "snippet.image",
                 },
             },
@@ -119,7 +119,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerOOM,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662479621426996,
+                    timeMsec: 1662479621426,
                     image: "snippet.image",
                 },
             },
@@ -139,7 +139,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerRestarted,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662480479618681,
+                    timeMsec: 1662480479618,
                     image: "snippet.image",
                 },
             },
@@ -159,7 +159,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerIsHealthy,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662523275404391,
+                    timeMsec: 1662523275404,
                     image: "snippet.image",
                 },
             },
@@ -179,7 +179,7 @@ describe("DockerAdapter", () => {
                 class: MonitoringEventContainerNotHealthy,
                 observableId: "snippet.id",
                 match: {
-                    timeMsec: 1662523944379267,
+                    timeMsec: 1662523944379,
                     image: "snippet.image",
                 },
             },

@@ -100,7 +100,9 @@ export class SignalingDetectLoops extends DomainService {
             container.del(RoflMarker);
             container.del(RoflNotifiedAt);
             this.containerRepo.save(container);
-            this.emitEvent(new NotificationEvent(renderRoflEnded(container)));
+            this.emitEvent(
+                new NotificationEvent(renderRoflEnded(container, now()))
+            );
             return true;
         }
         return false;
