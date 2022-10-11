@@ -1,5 +1,7 @@
 {
     "name": "rofl-monit",
+    "author": "funduck",
+    "repository": "https://github.com/funduck/rofl-monit",
     "packageManager": "yarn@3.2.3",
     "devDependencies": {
         "@tsconfig/node16": "^1.0.3",
@@ -17,8 +19,8 @@
         "start-source-mapped": "node -r source-map-support/register build/main.js",
         "run": "yarn run build && yarn run start-source-mapped",
         "test": "jest",
-        "docker-build": "docker rm -f rofl-monit && docker build -f Dockerfile -t rofl-monit .",
-        "docker-run": "docker run --name rofl-monit -v /var/run/docker.sock:/var/run/docker.sock rofl-monit"
+        "docker-build": "docker rm -f qlfunduck/rofl-monit && docker build -f Dockerfile -t qlfunduck/rofl-monit .",
+        "docker-run": "docker run --name rofl-monit -v /var/run/docker.sock:/var/run/docker.sock qlfunduck/rofl-monit"
     },
     "dependencies": {
         "JSONStream": "^1.3.5",
