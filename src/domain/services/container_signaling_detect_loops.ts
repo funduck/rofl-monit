@@ -2,7 +2,7 @@ import {
     renderRofl,
     renderRoflEnded,
     renderStateChange,
-} from "../../infra/container_render_notifications";
+} from "../../interface/container_render_notifications";
 import { now } from "../../infra/core/lib";
 import { logger } from "../../infra/logger";
 import { Container } from "../aggregates/container";

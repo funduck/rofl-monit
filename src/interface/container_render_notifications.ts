@@ -46,11 +46,11 @@ export function renderRoflEnded(
 ): NotificationContainerRoflEnded {
     return new NotificationContainerRoflEnded({
         text:
-            `Container ${container.image}:${container.id} ROFL ENDED\n` +
+            `Container ${container.image}:${container.id} ROFL ended\n` +
             dateToString(new Date(timeMsec)) +
             "\nExited restart-on-failure-loop",
         html:
-            `Container ${container.image}:<b>${container.id} ROFL ENDED</b>\n` +
+            `Container ${container.image}:<b>${container.id} ROFL</b> ended\n` +
             dateToString(new Date(timeMsec)) +
             "\nExited restart-on-failure-loop",
     });
