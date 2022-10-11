@@ -33,7 +33,13 @@ function main() {
         default:
             containerSignaling = new SignalingDetectLoops(
                 containerRepo,
-                publisher
+                publisher,
+                {
+                    roflDetectCount: Number(process.env.APP_ROFL_DETECT_COUNT),
+                    roflDetectWindowMsec: Number(
+                        process.env.APP_ROFL_WINDOW_MSEC
+                    ),
+                }
             );
     }
 

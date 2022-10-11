@@ -44,16 +44,13 @@ export class SignalingDetectLoops extends DomainService {
             roflDetectCount,
             roflDetectWindowMsec,
         }: {
-            roflDetectCount: number;
-            roflDetectWindowMsec: number;
-        } = {
-            roflDetectCount: 3,
-            roflDetectWindowMsec: 1 * 60 * 1000, // 10 minutes
+            roflDetectCount?: number;
+            roflDetectWindowMsec?: number;
         }
     ) {
         super(publisher);
-        this.roflDetectCount = roflDetectCount;
-        this.roflDetectWindowMsec = roflDetectWindowMsec;
+        this.roflDetectCount = roflDetectCount || 3; // 3 events in a window => rofl detected
+        this.roflDetectWindowMsec = roflDetectWindowMsec || 10 * 60 * 1000; // 10 minutes
         this.roflCheckInterval = setInterval(() => {
             this.checkAllRofls();
         }, 2 * this.roflDetectWindowMsec);
