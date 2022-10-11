@@ -1,4 +1,4 @@
-import { DomainEventPublisher } from "../domain/core/event";
+import { DomainEventFilter, DomainEventPublisher } from "../domain/core/event";
 import { NotificationEvent } from "../domain/events/notification_events";
 import { logger } from "../infra/logger";
 import { NotificatorInterface } from "../interface/notificator_interface";
@@ -11,9 +11,11 @@ import { NotificatorInterface } from "../interface/notificator_interface";
 export function NotificatorService({
     publisher,
     notificator,
+    eventsFilter,
 }: {
     publisher: DomainEventPublisher;
     notificator: NotificatorInterface;
+    eventsFilter?: DomainEventFilter;
 }) {
     publisher.subscribe(
         {
@@ -21,7 +23,8 @@ export function NotificatorService({
                 notificator.send(event.notification).catch(console.error);
             },
         },
-        NotificationEvent
+        NotificationEvent,
+        eventsFilter
     );
     logger.info("Started NotificatorService");
 }

@@ -8,7 +8,8 @@ import { DomainRepository } from "./domain/core/repository";
 import { DomainService } from "./domain/core/service";
 import { SignalingDetectLoops } from "./domain/services/container_signaling_detect_loops";
 import { SignalingSendAll } from "./domain/services/container_signaling_send_all";
-import { filterContainerNames } from "./domain/services/filter_container_names";
+import { filterByContainerId } from "./domain/services/filter_container_events";
+import { filterByText } from "./domain/services/filter_notification_events";
 import { InMemoryContainerRepository } from "./infra/container_in_memory_repository";
 import { TaskCancels } from "./infra/core/lib";
 import { logger } from "./infra/logger";
@@ -65,13 +66,16 @@ function main() {
     NotificatorService({
         publisher,
         notificator,
+        eventsFilter: process.env.APP_INCLUDE_NOTIFICATIONS
+            ? filterByText(process.env.APP_INCLUDE_NOTIFICATIONS)
+            : undefined,
     });
     SignalingService({
         publisher,
         containerSignaling,
-        eventsFilter: filterContainerNames(
-            String(process.env.APP_INCLUDE_CONTAINERS)
-        ),
+        eventsFilter: process.env.APP_INCLUDE_CONTAINERS
+            ? filterByContainerId(process.env.APP_INCLUDE_CONTAINERS)
+            : undefined,
     });
     ObserverService({
         publisher,

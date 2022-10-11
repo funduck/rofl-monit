@@ -91,15 +91,15 @@ Application uses environment variables for parameters.
 
 `APP_ROFL_WINDOW_MSEC` - number, milliseconds length of _window_ for ROFL detection.
 
-`APP_INCLUDE_CONTAINERS` - javascript regexp. Containers to be monitored.
+`APP_INCLUDE_CONTAINERS` - javascript regexp for container name. Containers to be monitored.
 
-`APP_INCLUDE_NOTIFICATIONS` is a list of strings/masks. Notifications to be exported.
+`APP_INCLUDE_NOTIFICATIONS` - javascript regexp for notification text. Notifications to be exported.
 
-`APP_EXPORTER` is string, available values: console, telegram.
+`APP_EXPORTER` - string, available values: console, telegram.
 
-`APP_TELEGRAM_BOT_TOKEN` is string, token of your telegram bot.
+`APP_TELEGRAM_BOT_TOKEN` - string, token of your telegram bot.
 
-`APP_TELEGRAM_CHAT` is a string, id of chat in telegram.
+`APP_TELEGRAM_CHAT` - string, id of chat in telegram.
 
 # Strategies
 

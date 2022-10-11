@@ -1,7 +1,7 @@
 import { DomainEvent, DomainEventFilter } from "../core/event";
 import { ContainerEvent } from "../events/container_events";
 
-export function filterContainerNames(
+export function filterByContainerId(
     regexpIncludeContainers: string
 ): DomainEventFilter {
     const re = new RegExp(regexpIncludeContainers);
