@@ -1,7 +1,6 @@
 # Rofl-monit
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
 [![tests](https://github.com/funduck/jybid/actions/workflows/main.yml/badge.svg)](https://github.com/funduck/rofl-monit/blob/main/.github/workflows/node.js.yml)
 
 This is a monitoring tool for **docker containers**. Primary purpose is to detect **R**estart-**O**n-**F**ailure-**L**oops, a situation when containers exits with code not `0`, restarts, crashes again and so on.
@@ -29,6 +28,8 @@ Basic use is:
   - [Console](#console)
   - [Telegram](#telegram)
 - [Tests](#tests)
+- [Releases](#releases)
+  - [v0.0.0](#v000)
 
 ## Motivation
 
@@ -76,7 +77,7 @@ docker run \
   -e APP_INCLUDE_NOTIFICATIONS=created,started,stopped,died,restarted \
   -e APP_EXPORTER=telegram \
   -e APP_TELEGRAM_BOT_TOKEN=<your bot token> \
-  -e APP_TELEGRAM_CHATS=<chat id 1>,<chat id 2> \
+  -e APP_TELEGRAM_CHAT=<chat id 1>,<chat id 2> \
   --name rofl-monit <TODO image>
 ```
 
@@ -94,7 +95,7 @@ Application uses environment variables for parameters.
 
 `APP_TELEGRAM_BOT_TOKEN` is string, token of your telegram bot.
 
-`APP_TELEGRAM_CHATS` is a list of strings, ids of chats in telegram.
+`APP_TELEGRAM_CHAT` is a string, id of chat in telegram.
 
 # Strategies
 
@@ -155,21 +156,27 @@ https://api.telegram.org/bot<your bot token>/getUpdates
 
 In response you will see unread messages, find `chat` object and take `id`.
 
-Set parameters into environment before running **docker-monit**
+Set parameters into environment before running **rofl-monit**
 
 ```PowerShell
 $Env:APP_EXPORTER='telegram'
 $Env:APP_TELEGRAM_BOT_TOKEN='***'
-$Env:APP_TELEGRAM_CHATS='***'
+$Env:APP_TELEGRAM_CHAT='***'
 ```
-
-You can set up several chats for exporting.
-
-In future I plan to enable changing list of chats on the fly.
 
 # Tests
 
 ```
 yarn install
-yarn test -b --verbose --silent --watch
+yarn test -b --verbose --silent
 ```
+
+# Releases
+
+## v0.0.0
+
+- strategies: send_all, detect_loops
+- send_all tracks only container state changes
+- detect_loops reacts on "died" event and checks when "ROFL" starts and ends
+- notificators: console, telegram
+- notifications on container: running, died, stopped, rofl, rofl ended
