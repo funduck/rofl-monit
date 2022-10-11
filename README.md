@@ -2,6 +2,8 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+[![tests](https://github.com/funduck/jybid/actions/workflows/main.yml/badge.svg)](https://github.com/funduck/rofl-monit/blob/main/.github/workflows/node.js.yml)
+
 This is a monitoring tool for **docker containers**. Primary purpose is to detect **R**estart-**O**n-**F**ailure-**L**oops, a situation when containers exits with code not `0`, restarts, crashes again and so on.
 
 Basic use is:
