@@ -91,7 +91,7 @@ Application uses environment variables for parameters.
 
 `APP_ROFL_WINDOW_MSEC` - number, milliseconds length of _window_ for ROFL detection.
 
-`APP_INCLUDE_CONTAINERS` is list of strings/masks. Containers to be monitored.
+`APP_INCLUDE_CONTAINERS` - javascript regexp. Containers to be monitored.
 
 `APP_INCLUDE_NOTIFICATIONS` is a list of strings/masks. Notifications to be exported.
 

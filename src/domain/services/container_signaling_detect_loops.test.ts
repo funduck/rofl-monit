@@ -56,9 +56,9 @@ describe("SignalingDetectLoops", () => {
     function emitStateChange() {
         eventPublisher.publish(
             new ContainerEventStateChanged(
-                container.id,
                 container.previousState(),
                 container.state(),
+                container.id,
                 now()
             )
         );

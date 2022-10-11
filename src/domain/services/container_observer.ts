@@ -104,9 +104,9 @@ export class ContainerObserver extends DomainService {
             container.transition(state, lastEvent.timeMsec);
             this.containerRepo.save(container);
             const event = new ContainerEventStateChanged(
-                container.id,
                 container.previousState(),
                 container.state(),
+                container.id,
                 lastEvent?.timeMsec
             );
             this.emitEvent(event);

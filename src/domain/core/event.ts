@@ -24,21 +24,28 @@ export interface DomainEventSubscriber {
     handleEvent(event: DomainEvent): void;
 }
 
+export type DomainEventFilter = (event: DomainEvent) => boolean;
+
 /**
  * Singleton domain events publisher. Registers subscribers and accepts publications.
  */
 export class DomainEventPublisher {
     private static instances: Map<string, DomainEventPublisher> = new Map();
 
-    private subscriptions: Map<typeof DomainEvent, Set<DomainEventSubscriber>> =
-        new Map();
+    private eventSubscribers: Map<
+        typeof DomainEvent,
+        Map<DomainEventSubscriber, DomainEventFilter | undefined>
+    > = new Map();
 
     private getSubscribedClasses(
         subscriber: DomainEventSubscriber
     ): Set<typeof DomainEvent> {
         const res: Set<typeof DomainEvent> = new Set();
-        for (const [EventClass, subscribers] of this.subscriptions.entries()) {
-            if (subscribers.has(subscriber)) {
+        for (const [
+            EventClass,
+            subscriptions,
+        ] of this.eventSubscribers.entries()) {
+            if (subscriptions.has(subscriber)) {
                 res.add(EventClass);
             }
         }
@@ -62,7 +69,7 @@ export class DomainEventPublisher {
      * Removes all subscribers from publisher.
      */
     reset() {
-        this.subscriptions = new Map();
+        this.eventSubscribers = new Map();
     }
 
     /**
@@ -70,14 +77,20 @@ export class DomainEventPublisher {
      */
     publish(event: DomainEvent): void {
         logger.trace("DomainEventPublisher.publish", event);
-        for (const [EventClass, subscribers] of this.subscriptions.entries()) {
+        for (const [
+            EventClass,
+            subscriptions,
+        ] of this.eventSubscribers.entries()) {
             if (event instanceof EventClass) {
-                for (const subscriber of subscribers) {
+                for (const [subscriber, filter] of subscriptions.entries()) {
                     try {
-                        logger.debug(
-                            `${subscriber} handling ${event.constructor.name}`
-                        );
-                        subscriber.handleEvent(event);
+                        filtering: {
+                            if (filter && !filter(event)) break filtering;
+                            logger.debug(
+                                `${subscriber} handling ${event.constructor.name}`
+                            );
+                            subscriber.handleEvent(event);
+                        }
                     } catch (e) {
                         logger.error(
                             `${subscriber} failed to handle ${event}`,
@@ -96,7 +109,8 @@ export class DomainEventPublisher {
      */
     subscribe(
         subscriber: DomainEventSubscriber,
-        eventClass: Class<DomainEvent> = DomainEvent
+        eventClass: Class<DomainEvent> = DomainEvent,
+        filter?: DomainEventFilter
     ): void {
         for (const EventClass of this.getSubscribedClasses(subscriber)) {
             if (
@@ -109,9 +123,12 @@ export class DomainEventPublisher {
                 );
             }
         }
-        const set = this.subscriptions.get(eventClass) || new Set();
-        set.add(subscriber);
-        this.subscriptions.set(eventClass, set);
+        const eventSubscriptions: Map<
+            DomainEventSubscriber,
+            DomainEventFilter | undefined
+        > = this.eventSubscribers.get(eventClass) || new Map();
+        eventSubscriptions.set(subscriber, filter);
+        this.eventSubscribers.set(eventClass, eventSubscriptions);
     }
 
     /**
@@ -121,6 +138,6 @@ export class DomainEventPublisher {
         subscriber: DomainEventSubscriber,
         eventClass: typeof DomainEvent = DomainEvent
     ): void {
-        this.subscriptions.get(eventClass)?.delete(subscriber);
+        this.eventSubscribers.get(eventClass)?.delete(subscriber);
     }
 }

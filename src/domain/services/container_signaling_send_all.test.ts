@@ -31,9 +31,9 @@ describe("SignalingSendAll", () => {
 
         eventPublisher.publish(
             new ContainerEventStateChanged(
-                container.id,
                 container.previousState(),
                 container.state(),
+                container.id,
                 timeMsec + 1
             )
         );

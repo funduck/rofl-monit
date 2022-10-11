@@ -6,14 +6,20 @@ import { ContainerState } from "../values/container_states";
 /**
  * Event when state of representation of container has changed
  */
-export class ContainerEvent extends DomainEvent {}
+export class ContainerEvent extends DomainEvent {
+    constructor(
+        readonly containerId: DomainEntityId<Container>,
+        ...args: ConstructorParameters<typeof DomainEvent>
+    ) {
+        super(...args);
+    }
+}
 
 export class ContainerEventStateChanged extends ContainerEvent {
     constructor(
-        readonly containerId: DomainEntityId<Container>,
         readonly previous: ContainerState,
         readonly current: ContainerState,
-        ...args: ConstructorParameters<typeof DomainEvent>
+        ...args: ConstructorParameters<typeof ContainerEvent>
     ) {
         super(...args);
     }
