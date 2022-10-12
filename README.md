@@ -34,17 +34,7 @@ Basic use is:
 
 An inspiration for this app is [docker-telegram-notifier](https://github.com/arefaslani/docker-telegram-notifier) easy to use, but too straightforward. It spams all messages when container dies and restarts.
 
-I wanted monitoring to be more clever.
-Example of use case:
-
-- If container is running for a long time, and only sometimes its healthchecks fail (1 of 50) I would consider it's state `running and healthy`.
-- If healthchecks fail more frequently (1 of 10) I would consider it's state `running with hiccups`.
-
-I would like to receive notifications when container's changes its **custom states**.
-
-Concrete states are defined in [startegy](#strategies).
-
-To export notifications app uses [exporters](#exporters): console, telegram.
+I wanted monitoring to be more clever and to send me only one notification when container is in trouble.
 
 # Installation
 
@@ -118,7 +108,7 @@ It is straightforward strategy, just sends all docker events as notifications. N
 
 `APP_STRATEGY=detect_loops`
 
-It detects when container "dies" several times in short time window and emits ROFL notification (restart-on-failure-loop).
+It detects when container "dies" (docker event "die" with `exit code != 0`) several times in short time window and emits ROFL notification (restart-on-failure-loop).
 
 When container runs long enough, ROFL ends.
 
