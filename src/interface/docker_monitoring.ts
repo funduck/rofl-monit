@@ -5,12 +5,13 @@ import JSONStream from "jsonstream";
 import { monitoringEventFromDockerEvent } from "./docker_adapter";
 import { logger } from "../infra/logger";
 
-export class DockerMonitoring implements MonitoringInterface {
+export class DockerMonitoring extends MonitoringInterface {
     private docker: Docker;
     private rawEventsStream?: Readable;
     private monitoringEventsStream: Transform;
 
     constructor() {
+        super();
         this.docker = new Docker();
         this.monitoringEventsStream = new Transform({
             transform(obj, encoding, callback) {

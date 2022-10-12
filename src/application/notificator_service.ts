@@ -26,5 +26,5 @@ export function NotificatorService({
         NotificationEvent,
         eventsFilter
     );
-    logger.info("Started NotificatorService");
+    logger.info("Started application NotificatorService");
 }

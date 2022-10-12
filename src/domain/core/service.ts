@@ -13,7 +13,7 @@ import {
  */
 export abstract class DomainService implements DomainEventSubscriber {
     constructor(protected eventPublisher: DomainEventPublisher) {
-        logger.info(`Initialing domain service ${this}`);
+        logger.info(`Starting domain service ${this}`);
         TaskCancels.add(() => this.stop());
     }
 

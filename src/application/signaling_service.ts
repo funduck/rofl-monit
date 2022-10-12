@@ -22,5 +22,5 @@ export function SignalingService({
         ContainerEventStateChanged,
         eventsFilter
     );
-    logger.info("Started SignalingService");
+    logger.info("Started application SignalingService");
 }

@@ -22,7 +22,7 @@ export function MonitoringService({
 
     monitoring.start().then(
         () => {
-            logger.info("Started MonitoringService");
+            logger.info("Started application MonitoringService");
 
             const monitEventsStream = monitoring.getMonitoringEventsStream();
             monitEventsStream.on("data", (monitEvent) => {

@@ -18,5 +18,5 @@ export function ObserverService({
 }) {
     const containerObserver = new ContainerObserver(containerRepo, publisher);
     publisher.subscribe(containerObserver, MonitoringEventContainer);
-    logger.info("Started ObserverService");
+    logger.info("Started application ObserverService");
 }
