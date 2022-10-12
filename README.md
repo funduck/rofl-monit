@@ -5,6 +5,8 @@
 
 This is a monitoring tool for **docker containers**. Primary purpose is to detect **R**estart-**O**n-**F**ailure-**L**oops, a situation when containers exits with code not `0`, restarts, crashes again and so on.
 
+[Watch the demo!](#demo)
+
 Basic use is:
 
 1. Choose Strategy to generate notifications
@@ -27,6 +29,7 @@ Basic use is:
   - [Console](#console)
   - [Telegram](#telegram)
 - [Tests](#tests)
+- [Demo](#demo)
 - [Releases](#releases)
   - [v0.0.0](#v000)
 
@@ -155,6 +158,14 @@ $Env:APP_TELEGRAM_CHAT='***'
 yarn install
 yarn test -b --verbose --silent
 ```
+
+# Demo
+
+- I start sample container, then kill and restart it to show how ROFL event is detected.
+- While container is in ROFL, no new notifications will come.
+- Then I wait until ROFL ends and show that new notification is delivered when I kill sample container.
+
+![](./demo.gif)
 
 # Releases
 
