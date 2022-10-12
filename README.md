@@ -30,8 +30,6 @@ Basic use is:
   - [Telegram](#telegram)
 - [Tests](#tests)
 - [Demo](#demo)
-- [Releases](#releases)
-  - [v0.0.0](#v000)
 
 ## Motivation
 
@@ -166,13 +164,3 @@ yarn test -b --verbose --silent
 - Then I wait until ROFL ends and show that new notification is delivered when I kill sample container.
 
 ![](./demo.gif)
-
-# Releases
-
-## v0.0.0
-
-- strategies: send_all, detect_loops
-- send_all tracks only container state changes
-- detect_loops reacts on "died" event and checks when "ROFL" starts and ends
-- notificators: console, telegram
-- notifications on container: running, died, stopped, rofl, rofl ended
