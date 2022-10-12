@@ -12,11 +12,6 @@ RUN yarn run build
 
 FROM node:lts-slim as app
 
-# ENV DOCKER_SOCKET=/var/run/docker.sock
-# ENV EXPORTER=telegram
-# ENV TELEGRAM_BOT_TOKEN=
-# ENV TELEGRAM_CHAT_ID=
-
 WORKDIR /app
 
 COPY package.json yarn.lock .yarnrc.yml ./

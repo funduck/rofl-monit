@@ -19,8 +19,7 @@ Basic use is:
 - [Installation](#installation)
   - [Docker](#docker)
   - [From sources](#from-sources)
-- [Usage](#usage)
-  - [Configuration](#configuration)
+- [Configuration](#configuration)
 - [Strategies](#strategies)
   - [Send all](#send-all)
   - [Detect loops](#detect-loops)
@@ -49,39 +48,41 @@ To export notifications app uses [exporters](#exporters): console, telegram.
 
 # Installation
 
-### Docker
-
-`docker run <TODO image>`
-
-### From sources
-
-Get sources `git clone --depth 1 https://github.com/funduck/rofl-monit`.
-
-Install `TODO`.
-
-Run `TODO`
-
-# Usage
-
-- Choose notifications strategy.
-- Set filter for containers.
-- Set filter for notifications.
-- Set exporter for notifications.
-
-Example for docker:
+## Docker
 
 ```
-docker run \
-  -e APP_STRATEGY=send_all \
-  -e APP_INCLUDE_CONTAINERS=* \
-  -e APP_INCLUDE_NOTIFICATIONS=created,started,stopped,died,restarted \
+docker run -d \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e APP_STRATEGY=detect_loops \
+  -e APP_ROFL_DETECT_COUNT=3 \
+  -e APP_ROFL_WINDOW_MSEC=600000 \
   -e APP_EXPORTER=telegram \
-  -e APP_TELEGRAM_BOT_TOKEN=<your bot token> \
-  -e APP_TELEGRAM_CHAT=<chat id 1>,<chat id 2> \
-  --name rofl-monit <TODO image>
+  -e APP_TELEGRAM_BOT_TOKEN=<TELEGRAM BOT TOKEN> \
+  -e APP_TELEGRAM_CHAT=<TELEGRAM CHAT ID> \
+  --name rofl-monit qlfunduck/rofl-monit:latest
 ```
 
-## Configuration
+## From sources
+
+Get sources
+
+```
+git clone --depth 1 https://github.com/funduck/rofl-monit
+```
+
+Install
+
+```
+yarn install
+```
+
+Run
+
+```
+yarn run run
+```
+
+# Configuration
 
 Application uses environment variables for parameters.
 
@@ -107,31 +108,21 @@ Strategy uses incoming stream of docker events and may check container's state i
 
 Strategy decides when to emit notifications.
 
-### Send all
+## Send all
 
 `APP_STRATEGY=send_all`
 
 It is straightforward strategy, just sends all docker events as notifications. Not good in production but good for debugging.
 
-### Detect loops
+## Detect loops
 
 `APP_STRATEGY=detect_loops`
 
-It detects when something of following happens with container:
+It detects when container "dies" several times in short time window and emits ROFL notification (restart-on-failure-loop).
 
-- created - when user creates new container
-- destroyed - when user destroys container
-- started - when user successfully starts container
-- restarted - when user restarts container
-- stopped - when user stops container
-- paused - when user pauses container
-- unpaused - when user unpauses container
-- finished - when container exits with `0` code
-- died - when container exits with `!= 0` code
-- not healthy - when container health checks fail
-- health recovered - when container health checks are ok again
-- rofl started - when container starts restart-on-failure-loop
-- rofl ended - when container exits restart-on-failure-loop and is running fine again
+When container runs long enough, ROFL ends.
+
+Size of window is configured by APP_ROFL_WINDOW_MSEC and number of "dies" by APP_ROFL_DETECT_COUNT.
 
 # Exporters
 
